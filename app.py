@@ -171,3 +171,8 @@ def check_rma_status():
     cur.close()
 
     return jsonify(rma_status)
+
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
