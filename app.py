@@ -111,3 +111,63 @@ def hello():
     )
 
     return ret
+
+@app.route("/create_rma", methods=['GET'])
+def create_rma():
+    serial_number = request.args.get('serial_number', '')
+    issue_description = request.args.get('issue_description', '')
+
+    if not serial_number:
+        return '{"error": "Serial_Number cannot be empty."}', 400
+
+    cur = mysql.cursor()
+
+    product_query = 'SELECT Product_ID FROM Product WHERE Serial_Number = %s;'
+    cur.execute(product_query, (serial_number,))
+    product_data = cur.fetchone()
+
+    if not product_data:
+        return '{"error": "Product not found for the given Serial_Number."}', 404
+
+    product_id = product_data[0]
+
+    current_date = datetime.now().strftime('%Y-%m-%d')
+
+    rma_query = 'INSERT INTO RMA (Inspaction_Start_Date, Check_Issue, Product_ID) VALUES (%s, %s, %s);'
+    cur.execute(rma_query, (current_date, issue_description, product_id))
+    mysql.commit()
+
+    cur.execute('SELECT LAST_INSERT_ID();')
+    rma_id = cur.fetchone()[0]
+
+    cur.close()
+
+    response = {'RMA_ID': rma_id}
+    ret = app.response_class(
+        response=json.dumps(response),
+        status=200,
+        mimetype='application/json'
+    )
+
+    return ret
+
+@app.route("/check_rma_status", methods=['GET'])
+def check_rma_status():
+    serial_number = request.args.get('serial_number', '')
+
+    cur = mysql.cursor(dictionary=True)
+
+    rma_status_query = '''
+        SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
+               RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name
+        FROM RMA
+        LEFT JOIN Product ON RMA.Product_ID = Product.Product_ID
+        WHERE Product.Serial_Number = %s;
+    '''
+
+    cur.execute(rma_status_query, (serial_number,))
+    rma_status = cur.fetchall()
+
+    cur.close()
+
+    return jsonify(rma_status)
