@@ -4,17 +4,19 @@ from flask_cors import CORS
 import json
 from datetime import datetime
 from flask import jsonify
+import logging
+from logging.config import dictConfig
+import os
 mysql = mysql.connector.connect(
     user='web',
     password='webPass',
     host='127.0.0.1',
     database='rma'
 )
-import os
+
 print(os.getcwd())
 
 
-from logging.config import dictConfig
 dictConfig({
     'version': 1,
     'formatters': {'default': {
