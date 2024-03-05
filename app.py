@@ -229,10 +229,11 @@ def assign_technician():
 
 
 @app.route('/technical', methods=['GET'])
-def technical_details():
+def technical_page():
     try:
-        with mysql.cursor(dictionary=True) as cur:
-            rma_status_query = '''
+        cur = mysql.cursor(dictionary=True)
+
+        rma_status_query = '''
                 SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
                     RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name,
                     Technician.Technician_ID, Technician.Tech_Name,
@@ -247,18 +248,17 @@ def technical_details():
                 LEFT JOIN Customer ON Product.Customer_ID = Customer.Customer_ID
                 WHERE RMA.RMA_ID = %s;
             '''
-            cur.execute(rma_status_query, (rmaId,))
-            rma_status = cur.fetchall()
+        cur.execute(rma_status_query)
+        rma_status = cur.fetchall()
 
         return jsonify(rma_status)
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+     except Exception as e:
+      
+        app.logger.error(f"Error in technical_page: {str(e)}")
+       
+        return jsonify({'error': 'Internal Server Error'}), 500
     finally:
-        if cur and not cur.closed:
-            cur.close()
-
-
+      
 
 
 
