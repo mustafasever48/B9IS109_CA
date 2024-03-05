@@ -228,8 +228,8 @@ def assign_technician():
 
 
 
-@app.route('/technical_page', methods=['GET'])  # Endpoint adını değiştirin
-def technical_page():
+@app.route('/technical_page', methods=['GET']) 
+def technicaldetail_page():
     try:
         cur = mysql.cursor(dictionary=True)
 
