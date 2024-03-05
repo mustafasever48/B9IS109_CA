@@ -229,7 +229,7 @@ def assign_technician():
 
 
 @app.route('/technical', methods=['GET'])
-def technical_page():
+def technical_details():
     try:
         with mysql.cursor(dictionary=True) as cur:
             rma_status_query = '''
