@@ -48,7 +48,7 @@ dictConfig({
 def teardown_request(exception):
     if hasattr(app, 'mysql') and app.mysql:
         app.mysql.close()
-        
+
 app = Flask(__name__)
 CORS(app)
 
@@ -185,13 +185,15 @@ def check_rma_status():
 
 @app.route('/technical', methods=['GET'])
 def technical_page():
+    cur = None  
+
     try:
         cur = mysql.cursor(dictionary=True)
 
         rma_status_query = '''
             SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
-                RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name,
-                Technician.Technician_ID
+                   RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name,
+                   Technician.Technician_ID
             FROM RMA
             LEFT JOIN Product ON RMA.Product_ID = Product.Product_ID
             LEFT JOIN Technician ON RMA.Technician_ID = Technician.Technician_ID
@@ -200,12 +202,15 @@ def technical_page():
         cur.execute(rma_status_query)
         rma_status = cur.fetchall()
 
-        return jsonify(rma_status)
     except Exception as e:
         app.logger.error(f"Error in technical_page: {str(e)}")
         return jsonify({'error': 'Internal Server Error'}), 500
+
     finally:
-        cur.close()
+        if cur:
+            cur.close() 
+    return jsonify(rma_status)
+
 
 @app.route('/technicians', methods=['GET'])
 def get_technicians():
