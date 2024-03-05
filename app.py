@@ -236,7 +236,6 @@ def get_rma_details():
         return jsonify({'error': 'RMA_ID is required.'}), 400
 
     cur = mysql.cursor(dictionary=True)
-    
 
     rma_details_query = '''
         SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
@@ -254,16 +253,17 @@ def get_rma_details():
         WHERE RMA.RMA_ID = %s;
     '''
 
-cur.execute(rma_details_query, (rmaId,))
-rma_details = cur.fetchone()
+    cur.execute(rma_details_query, (rmaId,))
+    rma_details = cur.fetchone()
 
-if not rma_details:
+    # Sorgu sonuçlarını işle
+    if not rma_details:
+        cur.close()
+        return jsonify({'error': 'RMA details not found.'}), 404
+
     cur.close()
-    return jsonify({'error': 'RMA details not found.'}), 404
 
-cur.close()
-
-return jsonify(rma_details)
+        return jsonify(rma_details)
 
 
 
