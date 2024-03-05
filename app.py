@@ -228,7 +228,7 @@ def assign_technician():
 
 
 
-@app.route('/technical', methods=['GET'])
+@app.route('/technical_page', methods=['GET'])  # Endpoint adını değiştirin
 def technical_page():
     try:
         cur = mysql.cursor(dictionary=True)
@@ -257,7 +257,6 @@ def technical_page():
         return jsonify({'error': 'Internal Server Error'}), 500
     finally:
         cur.close()
-
 
 
 
