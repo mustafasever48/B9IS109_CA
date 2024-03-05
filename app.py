@@ -20,7 +20,7 @@ CORS(app)
 
 print(os.getcwd())
 
-# Logger'ı yapılandırma kısmını buraya taşıyın
+# Logger with file on the same directory
 app.logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 file_handler = logging.FileHandler('app.log')
