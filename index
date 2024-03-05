@@ -4,56 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Page</title>
-    <style>
-        #rmaTable,
-        #tab1,
-        #rmaTable {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        #rmaTable th,
-        #rmaTable td,
-        #tab1 th,
-        #tab1 td,
-        #rmaTable th,
-        #rmaTable td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        #rmaTable th,
-        #tab1 th,
-        #rmaTable th {
-            background-color: #f2f2f2;
-        }
-
-        .technician-select {
-            display: none;
-        }
-
-        .assign-button {
-            cursor: pointer;
-            color: blue;
-            text-decoration: underline;
-        }
-
-        .redirect-button {
-            display: inline-block;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-    </style>
+    <title>Warranty Status Checker</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 
 <body>
     <a href="https://msubuntu.northeurope.cloudapp.azure.com/technical/" class="redirect-button">Technician Page</a>
@@ -64,7 +18,7 @@
 
     <br><br>
 
-    <table id="tab1" bgcolor="blue">
+    <table id="tab1" bgcolor="white">
         <thead>
             <tr>
                 <th>Brand</th>
@@ -97,7 +51,7 @@
         <button type="button" onclick="checkRmaStatus()">Check RMA Status</button>
     </form>
 
-    <table id="rmaTable" bgcolor="green">
+    <table id="rmaTable">
         <thead>
             <tr>
                 <th>RMA ID</th>
