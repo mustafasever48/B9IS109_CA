@@ -362,6 +362,23 @@ def update_inspection_completion_date():
         return jsonify({'error': str(e)}), 500
 
 
+@app.route('/delete_rma', methods=['DELETE'])
+def delete_rma():
+    rma_id = request.args.get('rmaId')
+
+    if not rma_id:
+        return '{"error": "RMA_ID is required."}', 400
+
+    cur = mysql.cursor()
+
+    delete_query = 'DELETE FROM RMA WHERE RMA_ID = %s;'
+    cur.execute(delete_query, (rma_id,))
+    mysql.commit()
+
+    cur.close()
+
+    return '{"Result": "Success"}'
+
 
 
 if __name__ == "__main__":
