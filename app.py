@@ -228,42 +228,36 @@ def assign_technician():
 
 
 
-@app.route('/technical/rma_details', methods=['GET'])
-def get_rma_details():
-    rmaId = request.args.get('rmaId')
+@app.route('/technical', methods=['GET'])
+def technical_page():
+    try:
+        with mysql.cursor(dictionary=True) as cur:
+            rma_status_query = '''
+                SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
+                    RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name,
+                    Technician.Technician_ID, Technician.Tech_Name,
+                    Brand.Brand_Name, Brand.Brand_Details, Brand.Brand_Website, Brand.Brand_Category,
+                    Model.Model_Name, Model.Model_Category, Model.Model_Details,
+                    Customer.Customer_Name, Customer.Customer_Address, Customer.Customer_Phone, Customer.Customer_Email
+                FROM RMA
+                LEFT JOIN Product ON RMA.Product_ID = Product.Product_ID
+                LEFT JOIN Technician ON RMA.Technician_ID = Technician.Technician_ID
+                LEFT JOIN Model ON Product.Model_ID = Model.Model_ID
+                LEFT JOIN Brand ON Model.Brand_ID = Brand.Brand_ID
+                LEFT JOIN Customer ON Product.Customer_ID = Customer.Customer_ID
+                WHERE RMA.RMA_ID = %s;
+            '''
+            cur.execute(rma_status_query, (rmaId,))
+            rma_status = cur.fetchall()
 
-    if not rmaId:
-        return jsonify({'error': 'RMA_ID is required.'}), 400
+        return jsonify(rma_status)
 
-    cur = mysql.cursor(dictionary=True)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        if cur and not cur.closed:
+            cur.close()
 
-    rma_details_query = '''
-        SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
-               RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name,
-               Technician.Technician_ID, Technician.Tech_Name,
-               Brand.Brand_Name, Brand.Brand_Details, Brand.Brand_Website, Brand.Brand_Category,
-               Model.Model_Name, Model.Model_Category, Model.Model_Details,
-               Customer.Customer_Name, Customer.Customer_Address, Customer.Customer_Phone, Customer.Customer_Email
-        FROM RMA
-        LEFT JOIN Product ON RMA.Product_ID = Product.Product_ID
-        LEFT JOIN Technician ON RMA.Technician_ID = Technician.Technician_ID
-        LEFT JOIN Model ON Product.Model_ID = Model.Model_ID
-        LEFT JOIN Brand ON Model.Brand_ID = Brand.Brand_ID
-        LEFT JOIN Customer ON Product.Customer_ID = Customer.Customer_ID
-        WHERE RMA.RMA_ID = %s;
-    '''
-
-    cur.execute(rma_details_query, (rmaId,))
-    rma_details = cur.fetchone()
-
-   
-    if not rma_details:
-        cur.close()
-        return jsonify({'error': 'RMA details not found.'}), 404
-
-    cur.close()
-
-    return jsonify(rma_details)
 
 
 
