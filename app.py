@@ -7,6 +7,7 @@ from flask import jsonify
 import logging
 from logging.config import dictConfig
 import os
+
 mysql = mysql.connector.connect(
     user='web',
     password='webPass',
@@ -14,8 +15,10 @@ mysql = mysql.connector.connect(
     database='rma'
 )
 
-print(os.getcwd())
+app = Flask(__name__)
+CORS(app)
 
+print(os.getcwd())
 
 dictConfig({
     'version': 1,
