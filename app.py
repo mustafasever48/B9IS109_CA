@@ -257,7 +257,6 @@ def get_rma_details():
 cur.execute(rma_details_query, (rmaId,))
 rma_details = cur.fetchone()
 
-
 if not rma_details:
     cur.close()
     return jsonify({'error': 'RMA details not found.'}), 404
@@ -265,6 +264,7 @@ if not rma_details:
 cur.close()
 
 return jsonify(rma_details)
+
 
 
 
