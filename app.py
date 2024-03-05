@@ -15,10 +15,11 @@ mysql = mysql.connector.connect(
     database='rma'
 )
 
+print(os.getcwd())
+
 app = Flask(__name__)
 CORS(app)
 
-print(os.getcwd())
 
 # Logger with file on the same directory
 app.logger.setLevel(logging.DEBUG)  
