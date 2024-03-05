@@ -256,7 +256,7 @@ def technical_page():
         app.logger.error(f"Error in technical_page: {str(e)}")
         return jsonify({'error': 'Internal Server Error'}), 500
     finally:
-      
+        cur.close()
 
 
 
