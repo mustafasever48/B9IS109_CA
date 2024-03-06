@@ -75,7 +75,8 @@
     </style>
 </head>
 
-<body>
+<body style="background-image: url('https://raw.githubusercontent.com/mustafasever48/B9IS109_CA/main/17927.jpg'); background-size: cover; background-repeat: no-repeat;">
+
     <h1>RMA Details</h1>
     <div id="rmaDetailsContainer"></div>
 

@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="style.css"> <!-- Stil dosyasını ekleyin -->
 </head>
 
-<body>
+<body style="background-image: url('https://raw.githubusercontent.com/mustafasever48/B9IS109_CA/main/17927.jpg'); background-size: cover; background-repeat: no-repeat;">
+
     <h2>All RMA Status</h2>
     <table id="rmaTable">
         <thead>
