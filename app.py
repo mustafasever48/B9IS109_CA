@@ -7,6 +7,7 @@ from flask import jsonify
 import logging
 from logging.config import dictConfig
 import os
+import traceback  
 
 mysql = mysql.connector.connect(
     user='web',
@@ -326,23 +327,19 @@ def update_inspection_completion_date():
         completion_date = request.form.get('completion_date')
 
         if not rma_id or not completion_date:
-            return jsonify({'error': 'RMA_ID and Completion Date are required.'}), 400
+            return jsonify({'error': 'RMA_ID and completion_date are required.'}), 400
 
         cur = mysql.cursor()
-        current_date = datetime.now().strftime('%Y-%m-%d')
-        update_query = '''
-            UPDATE RMA
-            SET Inspeciton_Completion_Date = %s
-            WHERE RMA_ID = %s;
-        '''
-        cur.execute(update_query, (completion_date, rma_id))
 
+        update_query = 'UPDATE RMA SET Inspection_Completion_Date = %s WHERE RMA_ID = %s;'
+        cur.execute(update_query, (completion_date, rma_id))
         mysql.commit()
 
         cur.close()
 
-        return jsonify({'success': 'Inspection Completion Date updated successfully.'}), 200
+        return jsonify({'success': 'Inspection completion date updated successfully.'}), 200
     except Exception as e:
+        traceback.print_exc()  
         return jsonify({'error': str(e)}), 500
 
 @app.route('/delete_rma', methods=['DELETE'])
