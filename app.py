@@ -331,7 +331,7 @@ def update_inspection_completion_date():
 
         cur = mysql.cursor()
 
-        update_query = 'UPDATE RMA SET Inspection_Completion_Date = %s WHERE RMA_ID = %s;'
+        update_query = 'UPDATE RMA SET Inspeciton_Completion_Date = %s WHERE RMA_ID = %s;'
         cur.execute(update_query, (completion_date, rma_id))
         mysql.commit()
 
