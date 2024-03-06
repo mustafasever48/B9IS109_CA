@@ -56,11 +56,6 @@
             color: black;
             border: 2px solid #4caf50;
         }
-        .updateDelete:hover {
-            background-color: white;
-            color: black;
-            border: 2px solid #e53b0b;
-        }
     </style>
 </head>
 
@@ -132,11 +127,14 @@
                             <td>${data['Customer_Name']}<br>${data['Customer_Address']}<br>${data['Customer_Phone']}<br>${data['Customer_Email']}</td>
                         </tr>
                     </table>
-            <button class="updateDelete" onclick="deleteRma()">Delete RMA</button>
-        </div>
-    `;
+                </div>
+                    <button id="deleteButton" onclick="deleteRma()">Delete RMA</button>
 
-    return html;
+                </div>
+            `;
+
+            return html;
+        }
 
         function updateResultIssue() {
             const rmaId = new URLSearchParams(window.location.search).get('rmaId');
@@ -212,9 +210,12 @@
             fetch('https://msubuntu.northeurope.cloudapp.azure.com:8080/update_inspection_completion_date', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                 },
-                body: `rma_id=${rmaId}&completion_date=${formattedDate}`,
+                body: JSON.stringify({
+                    rma_id: rmaId,
+                    completion_date: formattedDate,
+                }),
             })
                 .then(response => {
                     if (!response.ok) {
@@ -233,6 +234,8 @@
                     alert('An error occurred while updating Inspection Completion Date.');
                 });
         }
+
+
         function deleteRma() {
             const rmaId = new URLSearchParams(window.location.search).get('rmaId');
 
@@ -241,7 +244,7 @@
                 return;
             }
 
-            fetch(`https://msubuntu.northeurope.cloudapp.azure.com:8080/delete_rma`, {
+            fetch(`https://msubuntu.northeurope.cloudapp.azure.com:8080/delete_rma?rma_id=${rmaId}`, {
                 method: 'DELETE',
             })
                 .then(response => {
@@ -255,14 +258,14 @@
                         throw new Error(data.error);
                     }
                     alert(`Case deleted successfully.`);
-                  
                 })
                 .catch(error => {
                     console.error('Error:', error.message);
                     alert('An error occurred while deleting the case.');
                 });
+
         }
-    
+
     </script>
 </body>
 
