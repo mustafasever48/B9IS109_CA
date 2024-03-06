@@ -56,6 +56,22 @@
             color: black;
             border: 2px solid #4caf50;
         }
+        #deleteButton{
+            cursor: pointer;
+            background-color: #ec4503;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        
     </style>
 </head>
 
