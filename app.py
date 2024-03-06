@@ -348,7 +348,7 @@ def update_inspection_completion_date():
 @app.route('/delete_rma', methods=['DELETE'])
 def delete_rma():
     try:
-        rma_id = request.args.get('rmaId')
+        rma_id = request.args.get('rma_id')
 
         if not rma_id:
             return '{"error": "RMA_ID is required."}', 400
