@@ -257,7 +257,7 @@ def get_rma_details():
                Technician.Technician_ID, Technician.Tech_Name,
                Brand.Brand_Name, Brand.Brand_Details, Brand.Brand_Website, Brand.Brand_Category,
                Model.Model_Name, Model.Model_Category, Model.Model_Details,
-               Customer.Customer_Name, Customer.Customer_Address, Customer.Customer_Phone, Customer.Customer_Email
+               Customer.Customer_Name, Customer.Customer_Details, Customer.Customer_Phone, Customer.Customer_Email
         FROM RMA
         LEFT JOIN Product ON RMA.Product_ID = Product.Product_ID
         LEFT JOIN Technician ON RMA.Technician_ID = Technician.Technician_ID
