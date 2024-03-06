@@ -1,7 +1,7 @@
 CREATE TABLE `Brand` (
   `Brand_ID` Int,
   `Brand_Name` Varchar(20),
-  `Brand_Details` XML,
+  `Brand_Details` XML,  --LONGTEXT instead of XML type, but data consists of XML code
   `Brand_Website` Varchar(255),
   `Brand_Category` Varchar(50),
   PRIMARY KEY (`Brand_ID`)
