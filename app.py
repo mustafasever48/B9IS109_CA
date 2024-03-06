@@ -320,11 +320,14 @@ def update_product_defect():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+from flask import request, jsonify
+
 @app.route('/update_inspection_completion_date', methods=['POST'])
 def update_inspection_completion_date():
     try:
-        rma_id = request.form.get('rma_id')
-        completion_date = request.form.get('completion_date')
+        data = request.json
+        rma_id = data.get('rma_id')
+        completion_date = data.get('completion_date')
 
         if not rma_id or not completion_date:
             return jsonify({'error': 'RMA_ID and completion_date are required.'}), 400
@@ -341,6 +344,7 @@ def update_inspection_completion_date():
     except Exception as e:
         traceback.print_exc()  
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/delete_rma', methods=['DELETE'])
 def delete_rma():
