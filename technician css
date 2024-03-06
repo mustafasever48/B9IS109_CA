@@ -13,7 +13,7 @@
 
         #rmaTable th,
         #rmaTable td {
-            border: 1px solid #dddddd;
+            border: 1px solid #8a8a8a;
             text-align: left;
             padding: 8px;
         }
