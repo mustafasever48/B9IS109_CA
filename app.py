@@ -226,7 +226,7 @@ def login():
         if user:
             session['user_id'] = user['Technician_ID']
             flash('Login successful!', 'success')
-            return redirect(url_for('/technical')) 
+            return redirect('/technical')
         else:
             flash('Invalid credentials. Please try again.', 'danger')
 
