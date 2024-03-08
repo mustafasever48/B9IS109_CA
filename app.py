@@ -242,7 +242,7 @@ def get_technicians():
     connection.close()
     return technicians
 
-@app.route('/technicians', methods=['GET'])
+@app.route('technicians/', methods=['GET'])
 def get_technicians():
     cur = mysql.cursor(dictionary=True)
     cur.execute('SELECT * FROM Technician;')
