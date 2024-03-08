@@ -230,7 +230,7 @@ def login():
         else:
             flash('Invalid credentials. Please try again.', 'danger')
 
-    return render_template('index.html')
+    return ret
 
 def get_technicians():
     connection = pymysql.connect(**db_config)
