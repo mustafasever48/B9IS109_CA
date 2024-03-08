@@ -212,8 +212,8 @@ def technical_page():
     rma_status = cur.fetchall()
     cur.close()
 
-    return jsonify(rma_status)
-
+    return render_template('technical_page.html')
+    
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
