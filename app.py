@@ -217,11 +217,11 @@ def technical_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
+        username = request.form.get('email')
         password = request.form.get('password')
 
         technicians = get_technicians()
-        user = next((user for user in technicians if user['Tech_Name'] == username and user['Pass'] == password), None)
+        user = next((user for user in technicians if user['Tech_Email'] == username and user['Pass'] == password), None)
 
         if user:
             session['user_id'] = user['Technician_ID']
