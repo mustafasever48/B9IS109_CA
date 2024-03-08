@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_login import LoginManager, login_user, UserMixin, login_required, logout_user
 import mysql.connector
 from flask_cors import CORS
 import json
@@ -19,6 +20,7 @@ mysql = mysql.connector.connect(
 print(os.getcwd())
 
 app = Flask(__name__)
+app.secret_key = 'testsecretkey'
 CORS(app)
 
 
