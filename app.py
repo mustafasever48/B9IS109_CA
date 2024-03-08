@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_login import LoginManager, login_user, UserMixin, login_required, logout_user
+from flask_session import Session
 import mysql.connector
 from flask_cors import CORS
 import json
@@ -9,6 +10,7 @@ import logging
 from logging.config import dictConfig
 import os
 import traceback  
+import secrets,pymysql
 
 mysql = mysql.connector.connect(
     user='web',
@@ -20,8 +22,16 @@ mysql = mysql.connector.connect(
 print(os.getcwd())
 
 app = Flask(__name__)
-app.secret_key = 'testsecretkey'
 CORS(app)
+
+
+app.config['SECRET_KEY'] = secrets.token_hex(16)
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
+
+
+
+
 
 
 # Logger with file on the same directory
@@ -182,8 +192,13 @@ def check_rma_status():
 
 @app.route('/technical', methods=['GET'])
 def technical_page():
-    cur = mysql.cursor(dictionary=True)
+    user_id = session.get('user_id')
 
+    if not user_id:
+        flash('Please login first.', 'warning')
+        return redirect(url_for('login'))
+
+    cur = mysql.cursor(dictionary=True)
     rma_status_query = '''
         SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
                RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name,
@@ -192,13 +207,39 @@ def technical_page():
         LEFT JOIN Product ON RMA.Product_ID = Product.Product_ID
         LEFT JOIN Technician ON RMA.Technician_ID = Technician.Technician_ID
     '''
-    
+
     cur.execute(rma_status_query)
     rma_status = cur.fetchall()
-
     cur.close()
 
     return jsonify(rma_status)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        technicians = get_technicians()
+        user = next((user for user in technicians if user['Tech_Name'] == username and user['Pass'] == password), None)
+
+        if user:
+            session['user_id'] = user['Technician_ID']
+            flash('Login successful!', 'success')
+            return redirect(url_for('technical_page'))
+        else:
+            flash('Invalid credentials. Please try again.', 'danger')
+
+    return render_template('index.html')
+
+def get_technicians():
+    connection = pymysql.connect(**db_config)
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor.execute('SELECT * FROM Technician')
+    technicians = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return technicians
 
 @app.route('/technicians', methods=['GET'])
 def get_technicians():
@@ -208,6 +249,9 @@ def get_technicians():
     cur.close()
     return jsonify(technicians)
 
+
+
+    return render_template('login.html')
 
 @app.route('/assign_technician', methods=['POST'])
 def assign_technician():
