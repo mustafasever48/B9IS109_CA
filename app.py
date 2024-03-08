@@ -226,11 +226,7 @@ def login():
         if user:
             session['user_id'] = user['Technician_ID']
             flash('Login successful!', 'success')
-            return redirect('/technical')
-        else:
-            flash('Invalid credentials. Please try again.', 'danger')
-
-    return render_template('login')
+            return redirect('../technical')
 
 def get_technicians():
     connection = pymysql.connect(**db_config)
