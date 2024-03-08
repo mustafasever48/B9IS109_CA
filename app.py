@@ -251,7 +251,7 @@ def get_technicians():
 
 
 
-    return render_template('login.html')
+    return jsonify(technicians)
 
 @app.route('/assign_technician', methods=['POST'])
 def assign_technician():
