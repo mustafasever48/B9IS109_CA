@@ -29,7 +29,7 @@ app.config['SECRET_KEY'] = secrets.token_hex(16)
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-
+app.secret_key = 'secretkeytest'
 
 
 
