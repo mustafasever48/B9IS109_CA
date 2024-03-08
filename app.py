@@ -212,7 +212,7 @@ def technical_page():
     rma_status = cur.fetchall()
     cur.close()
 
-    return render_template('technical_page.html')
+    return jsonify(rma_status)
     
 @app.route('/login', methods=['GET', 'POST'])
 def login():
