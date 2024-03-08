@@ -196,7 +196,7 @@ def technical_page():
 
     if not user_id:
         flash('Please login first.', 'warning')
-        return redirect(url_for('login'))
+        return redirect(url_for('/login'))
 
     cur = mysql.cursor(dictionary=True)
     rma_status_query = '''
@@ -252,7 +252,7 @@ def get_technicians():
 
 
 
-    return jsonify(technicians)
+  
 
 @app.route('/assign_technician', methods=['POST'])
 def assign_technician():
