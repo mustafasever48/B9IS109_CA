@@ -12,24 +12,29 @@ import os
 import traceback  
 import secrets,pymysql
 
-import mysql.connector
-
+mysql = mysql.connector.connect(
+    user='web',
+    password='webPass',
+    host='127.0.0.1',
+    database='rma'
+)
 db_config = {
-    "host": "your_host",
-    "user": "your_user",
-    "password": "your_password",
-    "database": "your_database"
+    "user": "web",
+    "password": "webPass",
+    "host": "127.0.0.1",
+    "database": "rma"
 }
 
 try:
     connection = mysql.connector.connect(**db_config)
     if connection.is_connected():
-        print("MySQL connection succesfully")
+        print("MySQL bağlantısı başarıyla kuruldu.")
     else:
-        print("MySQL connection failed")
+        print("MySQL bağlantısı kurulamadı.")
 except mysql.connector.Error as err:
-    print(f"Error: {err}")
+    print(f"Hata: {err}")
 
+    
 print(os.getcwd())
 
 app = Flask(__name__)
