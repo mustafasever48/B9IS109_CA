@@ -381,12 +381,12 @@ DB_CONFIG = {
     'database': 'rma'
 }
 
-connection = pymysql.connect(**db_config)
- 
+connection = pymysql.connect(**DB_CONFIG)
+mysql = connection.cursor()
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-       
         username = request.form.get('email')
         password = request.form.get('password')
 
@@ -395,15 +395,13 @@ def login():
         if user:
             session['user_id'] = user['Technician_ID']
             flash('Login successful!', 'success')
-            return redirect('/technical') 
+            return redirect('/technical')
         else:
             flash('Invalid credentials. Please try again.', 'danger')
 
     elif request.method == 'GET':
-       
         return '<h1>Login page</h1>'
 
-    
     return 'Method Not Allowed', 405
 
 def authenticate_user(username, password):
@@ -412,16 +410,16 @@ def authenticate_user(username, password):
     return user
 
 def get_technicians():
-    cursor = mysql.cursor(dictionary=True)
+    cursor = mysql
     cursor.execute('SELECT * FROM Technician')
     technicians = cursor.fetchall()
-    cursor.close()
     return technicians
 
 @app.route('/technicians', methods=['GET'])
 def get_technicians_json():
     technicians = get_technicians()
     return jsonify(technicians)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
