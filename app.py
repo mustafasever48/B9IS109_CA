@@ -196,7 +196,7 @@ def technical_page():
 
     if not user_id:
         
-        return redirect(url_for('login/'))
+        return redirect(url_for('https://msubuntu.northeurope.cloudapp.azure.com/login/'))
 
     cur = mysql.cursor(dictionary=True)
     rma_status_query = '''
