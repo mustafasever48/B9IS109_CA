@@ -196,7 +196,7 @@ def technical_page():
 
     if not user_id:
         
-        return redirect(url_for('login/'))
+        return redirect(url_for('login'))
 
     cur = mysql.cursor(dictionary=True)
     rma_status_query = '''
@@ -224,7 +224,7 @@ def login():
         user = next((user for user in technicians if user['Tech_Email'] == username and user['Pass'] == password), None)
 
         if login_successful:
-            return redirect(url_for('technical/'))
+            return redirect(url_for('technical'))
         else:
             return '<h1>Invalid credentials. Please try again.</h1>'
 
