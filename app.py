@@ -220,6 +220,7 @@ db_config = {
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+       
         username = request.form.get('email')
         password = request.form.get('password')
 
@@ -232,7 +233,12 @@ def login():
         else:
             flash('Invalid credentials. Please try again.', 'danger')
 
-    return '<h1>Login page</h1>'
+    elif request.method == 'GET':
+       
+        return '<h1>Login page</h1>'
+
+    
+    return 'Method Not Allowed', 405
 
 def authenticate_user(username, password):
     technicians = get_technicians()
