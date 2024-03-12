@@ -230,7 +230,7 @@ def login():
         else:
             flash('Invalid credentials. Please try again.', 'danger')
 
-    return render_template('login/index.html')
+    return render_template('login')
 
 
 def get_technicians():
