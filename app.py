@@ -12,12 +12,7 @@ import os
 import traceback  
 import secrets,pymysql
 
-mysql = mysql.connector.connect(
-    user='web',
-    password='webPass',
-    host='127.0.0.1',
-    database='rma'
-)
+
 db_config = {
     "user": "web",
     "password": "webPass",
@@ -34,7 +29,7 @@ try:
 except mysql.connector.Error as err:
     print(f"Hata: {err}")
 
-    
+
 print(os.getcwd())
 
 app = Flask(__name__)
