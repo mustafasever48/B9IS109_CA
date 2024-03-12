@@ -211,51 +211,7 @@ def technical_page():
 
     return jsonify(rma_status)
 
-db_config = {
-    'user': 'web',
-    'password': 'webPass',
-    'host': '127.0.0.1',
-    'database': 'rma'
-} 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-       
-        username = request.form.get('email')
-        password = request.form.get('password')
 
-        user = authenticate_user(username, password)
-
-        if user:
-            session['user_id'] = user['Technician_ID']
-            flash('Login successful!', 'success')
-            return redirect('/technical') 
-        else:
-            flash('Invalid credentials. Please try again.', 'danger')
-
-    elif request.method == 'GET':
-       
-        return '<h1>Login page</h1>'
-
-    
-    return 'Method Not Allowed', 405
-
-def authenticate_user(username, password):
-    technicians = get_technicians()
-    user = next((user for user in technicians if user['Tech_Email'] == username and check_password_hash(user['Pass'], password)), None)
-    return user
-
-def get_technicians():
-    cursor = mysql.cursor(dictionary=True)
-    cursor.execute('SELECT * FROM Technician')
-    technicians = cursor.fetchall()
-    cursor.close()
-    return technicians
-
-@app.route('/technicians', methods=['GET'])
-def get_technicians_json():
-    technicians = get_technicians()
-    return jsonify(technicians)
 
   
 
@@ -418,7 +374,51 @@ def delete_rma():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+db_config = {
+    'user': 'web',
+    'password': 'webPass',
+    'host': '127.0.0.1',
+    'database': 'rma'
+} 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+       
+        username = request.form.get('email')
+        password = request.form.get('password')
 
+        user = authenticate_user(username, password)
+
+        if user:
+            session['user_id'] = user['Technician_ID']
+            flash('Login successful!', 'success')
+            return redirect('/technical') 
+        else:
+            flash('Invalid credentials. Please try again.', 'danger')
+
+    elif request.method == 'GET':
+       
+        return '<h1>Login page</h1>'
+
+    
+    return 'Method Not Allowed', 405
+
+def authenticate_user(username, password):
+    technicians = get_technicians()
+    user = next((user for user in technicians if user['Tech_Email'] == username and check_password_hash(user['Pass'], password)), None)
+    return user
+
+def get_technicians():
+    cursor = mysql.cursor(dictionary=True)
+    cursor.execute('SELECT * FROM Technician')
+    technicians = cursor.fetchall()
+    cursor.close()
+    return technicians
+
+@app.route('/technicians', methods=['GET'])
+def get_technicians_json():
+    technicians = get_technicians()
+    return jsonify(technicians)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
