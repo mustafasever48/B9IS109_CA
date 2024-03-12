@@ -224,7 +224,7 @@ def login():
         user = next((user for user in technicians if user['Tech_Email'] == username and user['Pass'] == password), None)
 
         if login_successful:
-            return redirect(url_for('https://msubuntu.northeurope.cloudapp.azure.com/technical/'))
+            return redirect(url_for('technical/'))
         else:
             return '<h1>Invalid credentials. Please try again.</h1>'
 
