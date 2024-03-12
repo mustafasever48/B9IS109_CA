@@ -12,23 +12,12 @@ import os
 import traceback  
 import secrets,pymysql
 
-
-db_config = {
-    "user": "web",
-    "password": "webPass",
-    "host": "127.0.0.1",
-    "database": "rma"
-}
-
-try:
-    connection = mysql.connector.connect(**db_config)
-    if connection.is_connected():
-        print("MySQL bağlantısı başarıyla kuruldu.")
-    else:
-        print("MySQL bağlantısı kurulamadı.")
-except mysql.connector.Error as err:
-    print(f"Hata: {err}")
-
+mysql = mysql.connector.connect(
+    user='web',
+    password='webPass',
+    host='127.0.0.1',
+    database='rma'
+)
 
 print(os.getcwd())
 
