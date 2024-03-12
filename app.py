@@ -233,8 +233,8 @@ def authenticate_user(username, password):
     return user
 
 def get_technicians():
-    connection = pymysql.connect(**db_config)
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor(dictionary=True)
     cursor.execute('SELECT * FROM Technician')
     technicians = cursor.fetchall()
     cursor.close()
