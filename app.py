@@ -226,11 +226,11 @@ def login():
         if user:
             session['user_id'] = user['Technician_ID']
             flash('Login successful!', 'success')
-            return redirect('technical/') 
+            return redirect(url_for('technical_page')) 
         else:
             flash('Invalid credentials. Please try again.', 'danger')
 
-    return 'Login page'
+    return render_template('login/index.html')
 
 
 def get_technicians():
