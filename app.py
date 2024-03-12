@@ -375,10 +375,13 @@ def delete_rma():
         return jsonify({'error': str(e)}), 500
 
 db_config = {
-    'user': 'web',
-    'password': 'webPass',
-    'host': '127.0.0.1',
-    'database': 'rma'
+    "host": "your_host",
+    "user": "your_user",
+    "password": "your_password",
+    "database": "your_database"
+}
+
+connection = pymysql.connect(**db_config)
 } 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
