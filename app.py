@@ -192,11 +192,7 @@ def check_rma_status():
 
 @app.route('/technical', methods=['GET'])
 def technical_page():
-    user_id = session.get('user_id')
-
-    if not user_id:
-        
-        return redirect(url_for('login'))
+    
 
     cur = mysql.cursor(dictionary=True)
     rma_status_query = '''
