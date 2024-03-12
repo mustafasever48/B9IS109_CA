@@ -59,8 +59,9 @@ dictConfig({
 })
 @app.teardown_request
 def teardown_request(exception):
-    if hasattr(mysql, 'is_connected') and mysql.is_connected():
+    if mysql and hasattr(mysql, 'is_connected') and mysql.is_connected():
         mysql.close()
+
 @app.route("/add", methods=['POST'])
 def add():
     if request.method == 'POST':
