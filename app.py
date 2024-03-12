@@ -223,10 +223,12 @@ def login():
         technicians = get_technicians()
         user = next((user for user in technicians if user['Tech_Email'] == username and user['Pass'] == password), None)
 
-        if login_successful:
-            return redirect(url_for('technical'))
+        if user:
+            session['user_id'] = user['Technician_ID']
+            flash('Login successful!', 'success')
+            return redirect('/technical') 
         else:
-            return '<h1>Invalid credentials. Please try again.</h1>'
+            flash('Invalid credentials. Please try again.', 'danger')
 
     return '<h1>Login page</h1>'
 
