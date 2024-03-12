@@ -236,7 +236,7 @@ def login():
 
 def authenticate_user(username, password):
     technicians = get_technicians()
-    user = next((user for user in technicians if user['Tech_Email'] == username and user['Pass'] == password), None)
+    user = next((user for user in technicians if user['Tech_Email'] == username and check_password_hash(user['Pass'], password)), None)
     return user
 
 def get_technicians():
@@ -246,12 +246,10 @@ def get_technicians():
     cursor.close()
     return technicians
 
-
 @app.route('/technicians', methods=['GET'])
 def get_technicians_json():
     technicians = get_technicians()
     return jsonify(technicians)
-
 
   
 
