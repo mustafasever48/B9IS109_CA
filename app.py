@@ -380,9 +380,9 @@ DB_CONFIG = {
     'host': '127.0.0.1',
     'database': 'rma'
 }
-mysql = connection.cursor(pymysql.cursors.DictCursor)
 connection = pymysql.connect(**DB_CONFIG)
-mysql = connection.cursor()
+mysql = connection.cursor(pymysql.cursors.DictCursor)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -419,6 +419,7 @@ def get_technicians():
 def get_technicians_json():
     technicians = get_technicians()
     return jsonify(technicians)
+
 
 
 if __name__ == "__main__":
