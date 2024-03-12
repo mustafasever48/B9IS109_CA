@@ -233,13 +233,12 @@ def authenticate_user(username, password):
     return user
 
 def get_technicians():
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor(dictionary=True)
+    cursor = mysql.cursor(dictionary=True)
     cursor.execute('SELECT * FROM Technician')
     technicians = cursor.fetchall()
     cursor.close()
-    connection.close()
     return technicians
+
 
 @app.route('/technicians', methods=['GET'])
 def get_technicians_json():
