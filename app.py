@@ -226,11 +226,16 @@ def login():
         if user:
             session['user_id'] = user['Technician_ID']
             flash('Login successful!', 'success')
-            return redirect('/technical') 
+            return redirect(url_for('session')) 
         else:
             flash('Invalid credentials. Please try again.', 'danger')
 
-    return '<h1>Login page</h1>'
+    return render_template('login.html')
+
+
+@app.route('/session')
+def session():
+    return render_template('session.html')
 
 
 def get_technicians():
