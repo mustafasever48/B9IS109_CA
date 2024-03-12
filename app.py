@@ -220,8 +220,7 @@ def login():
         username = request.form.get('email')
         password = request.form.get('password')
 
-        technicians = get_technicians()
-        user = next((user for user in technicians if user['Tech_Email'] == username and user['Pass'] == password), None)
+        user = authenticate_user(username, password)
 
         if user:
             session['user_id'] = user['Technician_ID']
@@ -232,8 +231,10 @@ def login():
 
     return '<h1>Login page</h1>'
 
-    
-
+def authenticate_user(username, password):
+    technicians = get_technicians()
+    user = next((user for user in technicians if user['Tech_Email'] == username and user['Pass'] == password), None)
+    return user
 
 def get_technicians():
     connection = pymysql.connect(**db_config)
@@ -246,12 +247,8 @@ def get_technicians():
 
 @app.route('/technicians', methods=['GET'])
 def get_technicians_json():
-    cur = mysql.cursor(dictionary=True)
-    cur.execute('SELECT * FROM Technician;')
-    technicians = cur.fetchall()
-    cur.close()
+    technicians = get_technicians()
     return jsonify(technicians)
-
 
 
   
