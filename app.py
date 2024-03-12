@@ -12,12 +12,23 @@ import os
 import traceback  
 import secrets,pymysql
 
-mysql = mysql.connector.connect(
-    user='web',
-    password='webPass',
-    host='127.0.0.1',
-    database='rma'
-)
+import mysql.connector
+
+db_config = {
+    "host": "your_host",
+    "user": "your_user",
+    "password": "your_password",
+    "database": "your_database"
+}
+
+try:
+    connection = mysql.connector.connect(**db_config)
+    if connection.is_connected():
+        print("MySQL connection succesfully")
+    else:
+        print("MySQL connection failed")
+except mysql.connector.Error as err:
+    print(f"Error: {err}")
 
 print(os.getcwd())
 
