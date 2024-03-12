@@ -195,7 +195,7 @@ def technical_page():
     user_id = session.get('user_id')
 
     if not user_id:
-        flash('Please login first.', 'warning')
+        
         return redirect(url_for('login/'))
 
     cur = mysql.cursor(dictionary=True)
@@ -223,14 +223,12 @@ def login():
         technicians = get_technicians()
         user = next((user for user in technicians if user['Tech_Email'] == username and user['Pass'] == password), None)
 
-        if user:
-            session['user_id'] = user['Technician_ID']
-            flash('Login successful!', 'success')
-            return redirect(url_for('https://msubuntu.northeurope.cloudapp.azure.com/technical/')) 
+        if login_successful:
+            return redirect(url_for('technical'))
         else:
-            flash('Invalid credentials. Please try again.', 'danger')
+            return '<h1>Invalid credentials. Please try again.</h1>'
 
-    return render_template('login')
+    return '<h1>Login page</h1>'
 
 
 def get_technicians():
