@@ -380,7 +380,7 @@ DB_CONFIG = {
     'host': '127.0.0.1',
     'database': 'rma'
 }
-
+mysql = connection.cursor(pymysql.cursors.DictCursor)
 connection = pymysql.connect(**DB_CONFIG)
 mysql = connection.cursor()
 
