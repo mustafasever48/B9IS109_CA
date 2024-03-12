@@ -242,8 +242,8 @@ def get_technicians():
     connection.close()
     return technicians
 
-@app.route('technicians/', methods=['GET'])
-def get_technicians():
+@app.route('/technicians', methods=['GET'])
+def get_technicians_json():
     cur = mysql.cursor(dictionary=True)
     cur.execute('SELECT * FROM Technician;')
     technicians = cur.fetchall()
