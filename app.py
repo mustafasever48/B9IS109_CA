@@ -214,7 +214,7 @@ def technical_page():
 
     return jsonify(rma_status)
     
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form.get('email')
