@@ -382,7 +382,7 @@ db_config = {
 }
 
 connection = pymysql.connect(**db_config)
-} 
+ 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
