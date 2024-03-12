@@ -209,7 +209,13 @@ def technical_page():
     cur.close()
 
     return jsonify(rma_status)
-    
+
+db_config = {
+    'user': 'web',
+    'password': 'webPass',
+    'host': '127.0.0.1',
+    'database': 'rma'
+} 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
