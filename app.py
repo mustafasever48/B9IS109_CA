@@ -370,16 +370,21 @@ def delete_rma():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-import mysqlclient
-from werkzeug.security import generate_password_hash, check_password_hash
-import secrets
+
 app.config['SECRET_KEY'] = secrets.token_hex(16)
-app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_USER'] = 'web'
-app.config['MYSQL_PASSWORD'] = 'webPass'
-app.config['MYSQL_DATABASE'] = 'rma'
-app.config['MYSQL_CURSORCLASS'] = pymysql.cursors.DictCursor
-connection = mysqlclient.connect(**app.config)
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
+
+app.secret_key = 'secretkeytest'
+DB_CONFIG = {
+    'user': 'web',
+    'password': 'webPass',
+    'host': '127.0.0.1',
+    'database': 'rma'
+}
+connection = pymysql.connect(**DB_CONFIG)
+mysql = connection.cursor(pymysql.cursors.DictCursor)
+
 
 @app.route('/login', methods=['GET'])
 def show_login_page():
