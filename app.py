@@ -386,11 +386,9 @@ connection = pymysql.connect(**DB_CONFIG)
 mysql = connection.cursor(pymysql.cursors.DictCursor)
 
 
-@app.route('/login', methods=['GET'])
-def show_login_page():
-    return render_template('login.html')
 
-@app.route('/login', methods=['POST'])
+
+@app.route('/login', methods=['GET','POST'])
 def process_login():
     if request.method == 'POST':
         username = request.form.get('email')
@@ -406,7 +404,7 @@ def process_login():
             flash('Invalid credentials. Please try again.', 'danger')
             return redirect(url_for('show_login_page'))
 
-    return render_template('login.html')
+    return render_template('login')
 
 
 def authenticate_user(username, password):
