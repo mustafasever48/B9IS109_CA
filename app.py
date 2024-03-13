@@ -381,43 +381,31 @@ app.config['MYSQL_DATABASE'] = 'rma'
 app.config['MYSQL_CURSORCLASS'] = pymysql.cursors.DictCursor
 connection = mysqlclient.connect(**app.config)
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form.get('email')
-        password = request.form.get('password')
+@app.route('/login', methods=['GET'])
+def show_login_page():
+    return render_template('login.html')
 
-        user = authenticate_user(username, password)
+@app.route('/login', methods=['POST'])
+def process_login():
+    username = request.form.get('email')
+    password = request.form.get('password')
 
-        if user:
-            flash('Login successful!', 'success')
-            return redirect(url_for('home'))  # Or any protected route
-        else:
-            flash('Invalid credentials. Please try again.', 'danger')
-    return '''
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <form action="/login" method="post">
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit">Login</button>
-    </form>
-    {% if flash %}
-        <div class="flash {{ flash.category }}">
-            {{ flash.message }}
-        </div>
-    {% endif %}
-</body>
-</html>
-'''
+    user = authenticate_user(username, password)
 
+    if user:
+        session['user_id'] = user['Technician_ID']
+        flash('Login successful!', 'success')
+        return redirect('/technical')
+    else:
+        flash('Invalid credentials. Please try again.', 'danger')
+        return redirect(url_for('show_login_page'))
+@app.route('/login', methods=['POST'])
+def process_login():
+
+    flash('Invalid credentials. Please try again.', 'danger')
+    return redirect(url_for('show_login_page'))
 def authenticate_user(username, password):
-    cursor = connection.cursor()
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (username,))
     user = cursor.fetchone()
 
@@ -425,6 +413,17 @@ def authenticate_user(username, password):
         return user
     else:
         return None
+
+def get_technicians():
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor.execute('SELECT * FROM Technician')
+    technicians = cursor.fetchall()
+    return technicians
+
+@app.route('/technicians', methods=['GET'])
+def get_technicians_json():
+    technicians = get_technicians()
+    return jsonify(technicians)
 
 
 
