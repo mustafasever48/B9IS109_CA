@@ -370,7 +370,9 @@ def delete_rma():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
+import mysqlclient
+from werkzeug.security import generate_password_hash, check_password_hash
+import secrets
 app.config['SECRET_KEY'] = secrets.token_hex(16)
 app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'web'
