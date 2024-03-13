@@ -390,7 +390,7 @@ mysql = connection.cursor(pymysql.cursors.DictCursor)
 def show_login_page():
     return render_template('login.html')
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def process_login():
     if request.method == 'POST':
         username = request.form.get('email')
