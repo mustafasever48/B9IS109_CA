@@ -407,9 +407,14 @@ def login():
     return 'Method Not Allowed', 405
 
 def authenticate_user(username, password):
-    technicians = get_technicians()
-    user = next((user for user in technicians if user['Tech_Email'] == username and check_password_hash(user['Pass'], password)), None)
-    return user
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (username,))
+    user = cursor.fetchone()
+
+    if user and check_password_hash(user['Pass'], password):
+        return user
+    else:
+        return None
 
 def get_technicians():
     cursor = connection.cursor(pymysql.cursors.DictCursor)
