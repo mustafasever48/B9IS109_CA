@@ -371,15 +371,11 @@ def delete_rma():
         return jsonify({'error': str(e)}), 500
 
 
-from werkzeug.security import check_password_hash
-import pymysql
-import secrets
-
-app = Flask(__name__)
 app.config['SECRET_KEY'] = secrets.token_hex(16)
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
+app.secret_key = 'secretkeytest'
 DB_CONFIG = {
     'user': 'web',
     'password': 'webPass',
@@ -387,8 +383,12 @@ DB_CONFIG = {
     'database': 'rma'
 }
 connection = pymysql.connect(**DB_CONFIG)
+mysql = connection.cursor(pymysql.cursors.DictCursor)
 
-@app.route('/login', methods=['GET', 'POST'])
+
+
+
+@app.route('/login', methods=['GET','POST'])
 def process_login():
     if request.method == 'POST':
         username = request.form.get('email')
@@ -404,27 +404,8 @@ def process_login():
             flash('Invalid credentials. Please try again.', 'danger')
             return redirect(url_for('show_login_page'))
 
-    return """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <form action="/login" method="post">
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit">Login</button>
-    </form>
-    {% if flash %}
-        <div class="flash {{ flash.category }}">
-            {{ flash.message }}
-        </div>
-    {% endif %}
-</body>
-</html>
-"""
+    return redirect(url_for('login'))
+
 
 def authenticate_user(username, password):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
