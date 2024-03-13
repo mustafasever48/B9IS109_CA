@@ -422,9 +422,11 @@ def process_login():
 
 
 @app.route('/technicians', methods=['GET'])
-def get_technicians_endpoint():
-    technicians = get_technicians()
-    return jsonify(technicians)
+def get_technicians():
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
+    cursor.execute('SELECT * FROM Technician')
+    technicians = cursor.fetchall()
+    return technicians
 
 
 
