@@ -371,11 +371,17 @@ def delete_rma():
         return jsonify({'error': str(e)}), 500
 
 
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask_session import Session
+from werkzeug.security import check_password_hash
+import pymysql
+import secrets
+
+app = Flask(__name__)
 app.config['SECRET_KEY'] = secrets.token_hex(16)
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-app.secret_key = 'secretkeytest'
 DB_CONFIG = {
     'user': 'web',
     'password': 'webPass',
@@ -383,12 +389,8 @@ DB_CONFIG = {
     'database': 'rma'
 }
 connection = pymysql.connect(**DB_CONFIG)
-mysql = connection.cursor(pymysql.cursors.DictCursor)
 
-
-
-
-@app.route('/login', methods=['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def process_login():
     if request.method == 'POST':
         username = request.form.get('email')
@@ -402,23 +404,8 @@ def process_login():
             return redirect('/technical')
         else:
             flash('Invalid credentials. Please try again.', 'danger')
-            return redirect(url_for('show_login_page'))
 
-    return redirect(url_for('login'))
-@app.route('/login', methods=['POST'])
-def process_login():
-    username = request.form.get('email')
-    password = request.form.get('password')
-
-    user = authenticate_user(username, password)
-
-    if user:
-        session['user_id'] = user['Technician_ID']
-        flash('Login successful!', 'success')
-        return redirect('/technical')
-    else:
-        flash('Invalid credentials. Please try again.', 'danger')
-        return render_template('login.html')
+    return render_template('login.html')
 
 def authenticate_user(username, password):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
