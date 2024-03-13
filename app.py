@@ -407,11 +407,8 @@ def process_login():
             return redirect(url_for('show_login_page'))
 
     return render_template('login.html')
-@app.route('/login', methods=['POST'])
-def process_login():
 
-    flash('Invalid credentials. Please try again.', 'danger')
-    return redirect(url_for('show_login_page'))
+
 def authenticate_user(username, password):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (username,))
@@ -428,10 +425,7 @@ def get_technicians():
     technicians = cursor.fetchall()
     return technicians
 
-@app.route('/technicians', methods=['GET'])
-def get_technicians_json():
-    technicians = get_technicians()
-    return jsonify(technicians)
+
 
 
 
