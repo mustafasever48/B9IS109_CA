@@ -407,15 +407,16 @@ def process_login():
 
     return render_template('login.html')
 
-def authenticate_user(username, password):
+def authenticate_user(email, password):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (username,))
+    cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (email,))
     user = cursor.fetchone()
 
     if user and check_password_hash(user['Pass'], password):
         return user
     else:
         return None
+
 
 def get_technicians():
     cursor = connection.cursor(pymysql.cursors.DictCursor)
