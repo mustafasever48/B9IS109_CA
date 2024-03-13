@@ -25,11 +25,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-app.config['SECRET_KEY'] = secrets.token_hex(16)
-app.config['SESSION_TYPE'] = 'filesystem'
-Session(app)
 
-app.secret_key = 'secretkeytest'
 
 
 
@@ -374,6 +370,12 @@ def delete_rma():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+app.config['SECRET_KEY'] = secrets.token_hex(16)
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
+
+app.secret_key = 'secretkeytest'
 DB_CONFIG = {
     'user': 'web',
     'password': 'webPass',
@@ -410,7 +412,7 @@ def authenticate_user(username, password):
     return user
 
 def get_technicians():
-    cursor = mysql
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM Technician')
     technicians = cursor.fetchall()
     return technicians
