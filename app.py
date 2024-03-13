@@ -405,7 +405,7 @@ def process_login():
         else:
             flash('Invalid credentials. Please try again.', 'danger')
 
-    return render_template('login.html')
+    return technicians
 
 def authenticate_user(email, password):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
@@ -415,7 +415,7 @@ def authenticate_user(email, password):
     if user and check_password_hash(user['Pass'], password):
         return user
     else:
-        return None
+        return technicians
 
 
 def get_technicians():
