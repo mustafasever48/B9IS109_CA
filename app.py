@@ -390,7 +390,7 @@ DB_CONFIG = {
 }
 connection = pymysql.connect(**DB_CONFIG)
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def process_login():
     if request.method == 'POST':
         username = request.form.get('email')
