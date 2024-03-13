@@ -405,7 +405,20 @@ def process_login():
             return redirect(url_for('show_login_page'))
 
     return redirect(url_for('login'))
+@app.route('/login', methods=['POST'])
+def process_login():
+    username = request.form.get('email')
+    password = request.form.get('password')
 
+    user = authenticate_user(username, password)
+
+    if user:
+        session['user_id'] = user['Technician_ID']
+        flash('Login successful!', 'success')
+        return redirect('/technical')
+    else:
+        flash('Invalid credentials. Please try again.', 'danger')
+        return render_template('login.html')
 
 def authenticate_user(username, password):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
