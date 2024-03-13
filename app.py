@@ -398,6 +398,9 @@ def process_login():
         email = request.form.get('email')
         password = request.form.get('password')
 
+        print("Email:", email)
+        print("Password:", password)
+
         try:
             cursor = connection.cursor(pymysql.cursors.DictCursor)
             cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (email,))
@@ -405,11 +408,15 @@ def process_login():
 
             if user and check_password_hash(user['Pass'], password):
                 session['user_id'] = user['Technician_ID']
+                print("Login successful")
                 return jsonify({'message': 'Login successful', 'status': 'success'})
             else:
+                print("Invalid credentials")
                 return jsonify({'message': 'Invalid credentials. Please try again.', 'status': 'error'})
         except Exception as e:
+            print("An error occurred:", str(e))
             return jsonify({'message': 'An error occurred: {}'.format(str(e)), 'status': 'error'})
+
 
 
 
