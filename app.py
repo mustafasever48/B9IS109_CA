@@ -421,7 +421,7 @@ def process_login():
 
 
 
-@app.route('/login', methods=['GET'])
+@app.route('/login/', methods=['GET'])
 def get_technicians():
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM Technician')
