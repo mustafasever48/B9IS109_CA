@@ -372,19 +372,12 @@ def delete_rma():
 
 
 app.config['SECRET_KEY'] = secrets.token_hex(16)
-app.config['SESSION_TYPE'] = 'filesystem'
-Session(app)
-
-app.secret_key = 'secretkeytest'
-DB_CONFIG = {
-    'user': 'web',
-    'password': 'webPass',
-    'host': '127.0.0.1',
-    'database': 'rma'
-}
-connection = pymysql.connect(**DB_CONFIG)
-mysql = connection.cursor(pymysql.cursors.DictCursor)
-
+app.config['MYSQL_HOST'] = '127.0.0.1'
+app.config['MYSQL_USER'] = 'web'
+app.config['MYSQL_PASSWORD'] = 'webPass'
+app.config['MYSQL_DATABASE'] = 'rma'
+app.config['MYSQL_CURSORCLASS'] = pymysql.cursors.DictCursor
+connection = mysqlclient.connect(**app.config)
 
 @app.route('/login', methods=['GET'])
 def show_login_page():
@@ -404,7 +397,11 @@ def process_login():
     else:
         flash('Invalid credentials. Please try again.', 'danger')
         return redirect(url_for('show_login_page'))
+@app.route('/login', methods=['POST'])
+def process_login():
 
+    flash('Invalid credentials. Please try again.', 'danger')
+    return redirect(url_for('show_login_page'))
 def authenticate_user(username, password):
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (username,))
