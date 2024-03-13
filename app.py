@@ -390,32 +390,24 @@ DB_CONFIG = {
 }
 connection = pymysql.connect(**DB_CONFIG)
 
-@app.route('/login/', methods=['GET', 'POST'])
+
+
+@app.route('/login/', methods=['POST'])
 def process_login():
     if request.method == 'POST':
-        username = request.form.get('email')
+        email = request.form.get('email')
         password = request.form.get('password')
 
-        user = authenticate_user(username, password)
+        cursor = connection.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (email,))
+        user = cursor.fetchone()
 
-        if user:
+        if user and check_password_hash(user['Pass'], password):
             session['user_id'] = user['Technician_ID']
-            flash('Login successful!', 'success')
-            return redirect('/technical')
+            return jsonify({'message': 'Login successful', 'status': 'success'})
         else:
-            flash('Invalid credentials. Please try again.', 'danger')
+            return jsonify({'message': 'Invalid credentials. Please try again.', 'status': 'error'})
 
-    return technicians
-
-def authenticate_user(email, password):
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (email,))
-    user = cursor.fetchone()
-
-    if user and check_password_hash(user['Pass'], password):
-        return user
-    else:
-        return technicians
 
 
 def get_technicians():
