@@ -421,12 +421,13 @@ def process_login():
 
 
 
-@app.route('/login/', methods=['GET'])
-def get_technicians():
+@app.route('/technicians/', methods=['GET'])
+def list_technicians():
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     cursor.execute('SELECT * FROM Technician')
     technicians = cursor.fetchall()
-    return technicians
+    return jsonify(technicians)
+
 
 
 
