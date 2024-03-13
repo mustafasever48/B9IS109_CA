@@ -404,7 +404,7 @@ def process_login():
             flash('Invalid credentials. Please try again.', 'danger')
             return redirect(url_for('show_login_page'))
 
-     return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 
 def authenticate_user(username, password):
