@@ -377,6 +377,8 @@ from werkzeug.security import check_password_hash
 import pymysql
 import secrets
 
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = secrets.token_hex(16)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -435,3 +437,5 @@ def list_technicians():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
+
+app.run(debug=True)
