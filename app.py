@@ -378,10 +378,10 @@ def login():
         if technician:
             session['loggedin'] = True
             session['email'] = technician[4]
-            return redirect(url_for('home'))
+            return redirect(url_for('/technical'))
         else:
             return 'Invalid email or password. Please try again.'
-    return render_template('login')
+    return render_template('index')
 
 
 if __name__ == "__main__":
