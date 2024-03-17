@@ -372,16 +372,20 @@ def login():
         email = request.form['email']
         password = request.form['password']
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s AND Pass = %s", (email, password))
-        technician = cur.fetchone()
-        cur.close()
-        if technician:
-            session['loggedin'] = True
-            session['email'] = technician[4]
-            return redirect(url_for('/technical'))
-        else:
-            return 'Invalid email or password. Please try again.'
-    return jsonify({'error': str(e)}), 500
+        try:
+            cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s AND Pass = %s", (email, password))
+            technician = cur.fetchone()
+            if technician:
+                session['loggedin'] = True
+                session['email'] = technician[4]
+                return redirect(url_for('technical_page'))
+            else:
+                return 'Invalid email or password. Please try again.'
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+        finally:
+            cur.close()
+    return jsonify({'error': 'Method not allowed'}), 405
 
 
 if __name__ == "__main__":
