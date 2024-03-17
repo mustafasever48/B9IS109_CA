@@ -381,7 +381,7 @@ def login():
             return redirect(url_for('/technical'))
         else:
             return 'Invalid email or password. Please try again.'
-    return render_template('index.html')
+    return jsonify({'error': str(e)}), 500
 
 
 if __name__ == "__main__":
