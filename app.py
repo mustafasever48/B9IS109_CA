@@ -366,6 +366,22 @@ def delete_rma():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s AND Pass = %s", (email, password))
+        technician = cur.fetchone()
+        cur.close()
+        if technician:
+            session['loggedin'] = True
+            session['email'] = technician[4]
+            return redirect(url_for('home'))
+        else:
+            return 'Invalid email or password. Please try again.'
+    return render_template('login.html')
 
 
 if __name__ == "__main__":
