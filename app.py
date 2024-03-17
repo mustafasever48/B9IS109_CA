@@ -1,6 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_login import LoginManager, login_user, UserMixin, login_required, logout_user
-from flask_session import Session
+from flask import Flask, render_template, request, redirect, url_for
 import mysql.connector
 from flask_cors import CORS
 import json
@@ -10,7 +8,6 @@ import logging
 from logging.config import dictConfig
 import os
 import traceback  
-import secrets,pymysql
 
 mysql = mysql.connector.connect(
     user='web',
@@ -23,11 +20,6 @@ print(os.getcwd())
 
 app = Flask(__name__)
 CORS(app)
-
-
-
-
-
 
 
 # Logger with file on the same directory
@@ -55,9 +47,8 @@ dictConfig({
 })
 @app.teardown_request
 def teardown_request(exception):
-    if mysql and hasattr(mysql, 'is_connected') and mysql.is_connected():
-        mysql.close()
-
+    if hasattr(app, 'mysql') and app.mysql:
+        app.mysql.close()
 @app.route("/add", methods=['POST'])
 def add():
     if request.method == 'POST':
@@ -189,9 +180,8 @@ def check_rma_status():
 
 @app.route('/technical', methods=['GET'])
 def technical_page():
-    
-
     cur = mysql.cursor(dictionary=True)
+
     rma_status_query = '''
         SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
                RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name,
@@ -200,16 +190,22 @@ def technical_page():
         LEFT JOIN Product ON RMA.Product_ID = Product.Product_ID
         LEFT JOIN Technician ON RMA.Technician_ID = Technician.Technician_ID
     '''
-
+    
     cur.execute(rma_status_query)
     rma_status = cur.fetchall()
+
     cur.close()
 
     return jsonify(rma_status)
 
+@app.route('/technicians', methods=['GET'])
+def get_technicians():
+    cur = mysql.cursor(dictionary=True)
+    cur.execute('SELECT * FROM Technician;')
+    technicians = cur.fetchall()
+    cur.close()
+    return jsonify(technicians)
 
-
-  
 
 @app.route('/assign_technician', methods=['POST'])
 def assign_technician():
@@ -371,71 +367,6 @@ def delete_rma():
         return jsonify({'error': str(e)}), 500
 
 
-from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_session import Session
-from werkzeug.security import check_password_hash
-import pymysql
-import secrets
-
-
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = secrets.token_hex(16)
-app.config['SESSION_TYPE'] = 'filesystem'
-Session(app)
-
-DB_CONFIG = {
-    'user': 'web',
-    'password': 'webPass',
-    'host': '127.0.0.1',
-    'database': 'rma'
-}
-connection = pymysql.connect(**DB_CONFIG)
-
-
-
-@app.route('/login/', methods=['POST'])
-def process_login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-
-        print("Email:", email)
-        print("Password:", password)
-
-        try:
-            cursor = connection.cursor(pymysql.cursors.DictCursor)
-            cursor.execute('SELECT * FROM Technician WHERE Tech_Email = %s', (email,))
-            user = cursor.fetchone()
-
-            if user and check_password_hash(user['Pass'], password):
-                session['user_id'] = user['Technician_ID']
-                print("Login successful")
-                return jsonify({'message': 'Login successful', 'status': 'success'})
-            else:
-                print("Invalid credentials")
-                return jsonify({'message': 'Invalid credentials. Please try again.', 'status': 'error'})
-        except Exception as e:
-            print("An error occurred:", str(e))
-            return jsonify({'message': 'An error occurred: {}'.format(str(e)), 'status': 'error'})
-
-
-
-
-
-@app.route('/technicians/', methods=['GET'])
-def list_technicians():
-    cursor = connection.cursor(pymysql.cursors.DictCursor)
-    cursor.execute('SELECT * FROM Technician')
-    technicians = cursor.fetchall()
-    return jsonify(technicians)
-
-
-
-
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
-
-app.run(debug=True)
