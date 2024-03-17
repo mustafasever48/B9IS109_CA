@@ -381,7 +381,7 @@ def login():
             return redirect(url_for('home'))
         else:
             return 'Invalid email or password. Please try again.'
-    return render_template('login.html')
+    return render_template('login')
 
 
 if __name__ == "__main__":
