@@ -374,6 +374,8 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        print("Email:", email) 
+        print("Password:", password)  
         cur = mysql.connection.cursor()
         try:
             cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s AND Pass = %s", (email, password))
