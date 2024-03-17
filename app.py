@@ -383,7 +383,7 @@ def login():
             if technician:
                 session['loggedin'] = True
                 session['email'] = technician[4]
-                return redirect(url_for('technical_page'))
+                return redirect(url_for("/technical"))
             else:
                 return 'Invalid email or password. Please try again.'
         except Exception as e:
