@@ -372,13 +372,17 @@ def delete_rma():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = input("Insert email")
+        password = input("Insert password")
         print("Email:", email) 
         print("Password:", password)  
+        id = cursor.lastrowid 
+   
         cur = mysql.connection.cursor()
         try:
-            cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s AND Pass = %s", (email, password))
+            cursor.execute('''SELECT * FROM Technician WHERE Technician_ID = %s AND Tech_Email = %s AND Pass = %s''' % (id, email, password))
+            
+
             technician = cur.fetchone()
             if technician:
                 session['loggedin'] = True
