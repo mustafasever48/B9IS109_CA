@@ -387,7 +387,7 @@ def login():
                 print(technician)
                 # session['loggedin'] = True
                 # session['email'] = technician[4]
-                return redirect(url_for('https://msubuntu.northeurope.cloudapp.azure.com/technical/'))
+                return redirect(url_for('/'))
             else:
                 abort(400, 'Invalid email or password. Please try again.')
         except Exception as e:
