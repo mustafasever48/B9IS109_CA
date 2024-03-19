@@ -387,7 +387,7 @@ def login():
                 print(technician)
                 # session['loggedin'] = True
                 # session['email'] = technician[4]
-                return redirect(url_for('/var/www/html/login/static', filename='redirect.html'))
+                return send_from_directory('/var/www/html/login/static', 'redirect.html')
 
             else:
                 abort(400, 'Invalid email or password. Please try again.')
