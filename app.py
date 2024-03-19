@@ -387,7 +387,7 @@ def login():
                 print(technician)
                 # session['loggedin'] = True
                 # session['email'] = technician[4]
-                return send_from_directory('/var/www/html/login/technical', 'index.html')
+                return send_from_directory('/var/www/html/technical', 'index.html')
 
             else:
                 abort(400, 'Invalid email or password. Please try again.')
