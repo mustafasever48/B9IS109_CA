@@ -369,7 +369,7 @@ def delete_rma():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/login/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
