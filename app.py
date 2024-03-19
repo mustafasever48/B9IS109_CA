@@ -385,8 +385,8 @@ def login():
             
             if technician:
                 print(technician)
-                session['loggedin'] = True
-                session['email'] = technician[4]
+                # session['loggedin'] = True
+                # session['email'] = technician[4]
                 return redirect(url_for('/technical'))
             else:
                 abort(400, 'Invalid email or password. Please try again.')
