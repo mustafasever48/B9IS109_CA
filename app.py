@@ -382,8 +382,9 @@ def login():
             cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s AND Pass = %s", (email, password))
             
             technician = cur.fetchone()
-            print(technician)
+            
             if technician:
+                print(technician)
                 session['loggedin'] = True
                 session['email'] = technician[4]
                 return redirect(url_for('/technical'))
