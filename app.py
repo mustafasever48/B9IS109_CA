@@ -390,7 +390,8 @@ def login():
                 return send_from_directory('/var/www/html/login/static', 'redirect.html')
 
             else:
-                flash('Invalid email or password. Please try again.', 'error')
+                error_message = 'Invalid email or password. Please try again.'
+                abort(400, error_message)
                 return send_from_directory('/var/www/html/login', 'index.html')
         except Exception as e:
             abort(500, str(e))
