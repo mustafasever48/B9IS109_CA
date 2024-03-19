@@ -396,7 +396,7 @@ def login():
             abort(500, str(e))
         finally:
             cur.close()
-    return jsonify({'error': 'Method not allowed'}), 405
+    return send_from_directory('/var/www/html/login', 'index.html') 
 
 
 if __name__ == "__main__":
