@@ -1,4 +1,6 @@
 h2#warranty-status-title {
+    top: 20px; /* Arka plandan istediğiniz kadar yukarıda olmasını istiyorsanız değeri değiştirebilirsiniz */
+            left: 20px;
     color: white;
     background-color: #17a2b8;
     padding: 10px;
