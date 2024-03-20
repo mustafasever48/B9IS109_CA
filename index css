@@ -1,92 +1,176 @@
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+    header {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
 
-        header {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
+    main {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        main {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    h1,
+    h2 {
+        color: #333;
+    }
 
-        h1,
-        h2 {
-            color: #333;
-        }
+    form {
+        margin-top: 20px;
+    }
 
-        form {
-            margin-top: 20px;
-        }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-        }
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
 
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
+    button {
+        background-color: #17a2b8;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
 
-        button {
-            background-color: #17a2b8;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    p {
+        margin-top: 20px;
+        color: #555;
+    }
+
+    .redirect-button {
+        display: inline-block;
+        padding: 10px;
+        background-color: #17a2b8;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    
+    #rmaTable td {
+        background-color: white;
+    }
+
+      /* Responsive Design */
+    @media only screen and (max-width: 320px) {
+
+        body,
+        html {
+            font-size: 12px;
+            padding: 3px;
+            
         }
 
         th,
         td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #17a2b8;
-            color: white;
-        }
-
-        p {
-            margin-top: 20px;
-            color: #555;
+            padding: 1px;
+            font-size: 5px;
+            
         }
 
         .redirect-button {
-            display: inline-block;
-            padding: 10px;
-            background-color: #17a2b8;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-            text-decoration: none;
+            font-size: 12px;
+            padding: 6px;
+            
+        }
+    }
+
+
+    
+    @media only screen and (max-width: 375px) {
+
+        body,
+        html {
+            font-size: 14px;
+            padding: 5px;
         }
 
+        th,
+        td {
+            padding: 1px;
+            font-size: 5px;
+        }
 
+    }
 
+    
+    @media only screen and (max-width: 600px) {
+
+        body,
+        html {
+            min-width: 320px;
+            overflow-x: auto;
+           
+        }
+
+        th,
+        td {
+            padding: 2px;
+            font-size: 8px;
+            
+        }
+
+    }
+
+   
+    @media only screen and (min-width: 601px) and (max-width: 1024px) {
+
+        body,
+        html {
+            min-width: 600px;
+            overflow-x: auto;
+            
+        }
+    }
+
+  
+    @media only screen and (min-width: 1025px) {
+
+        body,
+        html {
+            min-width: 1024px;
+            overflow-x: auto;
+           
+        }
+    }
