@@ -26,10 +26,7 @@ CORS(app)
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-
 file_handler = logging.FileHandler('app.log')
-file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 app.logger.addHandler(file_handler)
 
