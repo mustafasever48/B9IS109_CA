@@ -11,7 +11,8 @@
 
 <body style="background-image: url('https://raw.githubusercontent.com/mustafasever48/B9IS109_CA/main/17927.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
 
-    <a href="https://msubuntu.northeurope.cloudapp.azure.com/technical/" class="redirect-button">Technician Page</a>
+<a href="https://msubuntu.northeurope.cloudapp.azure.com/login/" class="redirect-button">Technician Login</a>
+
     <h2 id="warranty-status-title">Check Warranty Status</h2>
     <label for="serialNumber">Enter Serial Number:</label>
     <input type="text" id="serialNumber" name="serialNumber">
