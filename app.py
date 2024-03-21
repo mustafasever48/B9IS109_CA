@@ -23,13 +23,28 @@ print(os.getcwd())
 
 app = Flask(__name__)
 CORS(app)
-
+#logging save in app.log
 logging.basicConfig(filename='app.log', level=logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 file_handler = logging.FileHandler('app.log')
 file_handler.setFormatter(formatter)
 app.logger.addHandler(file_handler)
-
+#logging in the console
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
 
 @app.teardown_request
 def teardown_request(exception):
