@@ -3,9 +3,15 @@
     background-color: #17a2b8;
     padding: 10px;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #17a2b8;
+}
 
 #rmaTable {
     border-collapse: collapse;
@@ -30,10 +36,90 @@
 .assign-button,
 .view-details-button {
     cursor: pointer;
-    color: blue;
+    color: #17a2b8;
     text-decoration: underline;
     display: inline-block;
     padding: 5px 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+.return-button {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+
+}
+
+.return-button:hover {
+    background-color: #117a8b;
+}
+
+
+@media only screen and (max-width: 480px) {
+
+    body,
+    html {
+        font-size: 5px;
+        padding: 1px;
+    }
+
+    .assign-button,
+    .view-details-button,
+    #rmaTable th,
+    #rmaTable td {
+        padding: 1px;
+        font-size: 4px;
+    }
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+
+    body,
+    html {
+        font-size: 10px;
+    }
+
+    #rmaTable th,
+    #rmaTable td {
+        padding: 3px;
+        font-size: 9px;
+    }
+}
+
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+
+    body,
+    html {
+        font-size: 12px;
+        margin: 0;
+        padding: 0;
+    }
+
+    #rmaTable th,
+    #rmaTable td {
+        padding: 4px;
+        font-size: 10px;
+    }
+}
+
+
+@media only screen and (min-width: 1025px) {
+
+    body,
+    html {
+        font-size:
+    }
+
+    #rmaTable th,
+    #rmaTable td {
+        padding: 5px;
+        font-size: 12px;
+    }
 }
