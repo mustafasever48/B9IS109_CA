@@ -8,7 +8,7 @@ import logging
 from logging.config import dictConfig
 import os
 import traceback  
-
+#mariadb connection info from config.json file
 with open('config.json', 'r') as f:
     config = json.load(f)
 
