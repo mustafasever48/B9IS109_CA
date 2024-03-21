@@ -9,12 +9,22 @@ from logging.config import dictConfig
 import os
 import traceback  
 
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+
+mysql_user = config["mysql_user"]
+mysql_password = config["mysql_password"]
+mysql_host = config["mysql_host"]
+mysql_database = config["mysql_database"]
+
 try:
+    
     mysql = mysql.connector.connect(
-        user='web',
-        password='webPass',
-        host='127.0.0.1',
-        database='rma'
+        user=mysql_user,
+        password=mysql_password,
+        host=mysql_host,
+        database=mysql_database
     )
 except mysql.connector.Error as err:
     print("MySQL Error: {}".format(err))
