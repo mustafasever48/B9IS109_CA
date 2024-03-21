@@ -45,6 +45,7 @@ function createRma() {
         })
         .catch(error => console.error('Error:', error));
 }
+
 function checkRmaStatus() {
     const serialNumberCheck = document.getElementById("serialNumberCheck").value;
 
@@ -66,8 +67,8 @@ function checkRmaStatus() {
                         const newCell = document.createElement("td");
 
                         if (cell.includes("Date")) {
-                            const date = new Date(rma[cell]);
-                            newCell.textContent = date.toISOString().split('T')[0];
+                            const dateValue = rma[cell] ? new Date(rma[cell]).toISOString().split('T')[0] : ""; 
+                            newCell.textContent = dateValue;
                         } else {
                             newCell.textContent = rma[cell];
                         }
