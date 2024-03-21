@@ -8,7 +8,7 @@ import logging
 from logging.config import dictConfig
 import os
 import traceback  
-import mylib
+
 try:
     mysql = mysql.connector.connect(
         user='web',
