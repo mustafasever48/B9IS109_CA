@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warranty Status Checker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+
+<body
+    style="background-image: url('https://raw.githubusercontent.com/mustafasever48/B9IS109_CA/main/17927.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+
+    <a href="https://msubuntu.northeurope.cloudapp.azure.com/login/" class="redirect-button">Technician Login</a>
+    <h2 id="warranty-status-title">Check Warranty Status</h2>
+    <label for="serialNumber">Enter Serial Number:</label>
+    <input type="text" id="serialNumber" name="serialNumber">
+    <button onclick="fetchData()">Get Data</button>
+
+    <br><br>
+
+    <table id="tab1" bgcolor="white">
+        <thead>
+            <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Product</th>
+                <th>Serial Number</th>
+                <th>Product Sold Date</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <p id="warrantyStatus"></p>
+
+    <br><br>
+
+    <h2>Create RMA Case</h2>
+    <form id="rmaForm">
+        <label for="defectDescription">Check Issue:</label>
+        <input type="text" id="issueDescription" name="issueDescription">
+
+        <br><br>
+
+        <button type="button" onclick="createRma()">Create RMA Case</button>
+    </form>
+    <h2>Check RMA Status</h2>
+    <form id="checkRmaForm">
+        <label for="serialNumberCheck">Enter Serial Number:</label>
+        <input type="text" id="serialNumberCheck" name="serialNumberCheck">
+        <button type="button" onclick="checkRmaStatus()">Check RMA Status</button>
+    </form>
+
+    <table id="rmaTable">
+        <thead>
+            <tr>
+                <th>RMA ID</th>
+                <th>Inspaction Start Date</th>
+                <th>Inspection Completion Date</th>
+                <th>Product Defect</th>
+                <th>Check Issue</th>
+                <th>Result Issue</th>
+                <th>Product ID</th>
+                <th>Serial Number</th>
+                <th>Product Name</th>
+            </tr>
+        </thead>
+        <tbody id="rmaTableBody"></tbody>
+    </table>
+
+    <p id="rmaStatus"></p>
+
+
+
+    <script src="index.js"></script>
+</body>
+
+</html>
