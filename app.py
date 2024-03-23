@@ -425,7 +425,7 @@ def login():
 def update_user_password(email):
     
     new_password = generate_random_password()
-    print(new_password)
+    print("new pass:",new_password)
     hashed_password = hash_password(new_password)
 
     
