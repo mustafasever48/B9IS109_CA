@@ -442,7 +442,7 @@ def update_user_password(email):
 
     return new_password
 
-#update_user_password('alikula@example.com')
+update_user_password('alikula@example.com')
 update_user_password('velimula@example.com')
 
 if __name__ == "__main__":
