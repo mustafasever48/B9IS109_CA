@@ -422,19 +422,14 @@ def login():
         finally:
             cur.close()
     return jsonify({'error': 'Method not allowed'}), 405
-def update_user_password(email):
-    
-    new_password = generate_random_password()
-    print("new pass:",new_password)
+def update_user_password(email, new_password):
     hashed_password = hash_password(new_password)
-
     
     cur = mysql.cursor()
     try:
         cur.execute("UPDATE Technician SET Pass = %s WHERE Tech_Email = %s", (hashed_password, email))
         mysql.commit()
     except Exception as e:
-        
         mysql.rollback()
         raise e
     finally:
@@ -442,8 +437,14 @@ def update_user_password(email):
 
     return new_password
 
-#update_user_password('alikula@example.com')
-update_user_password('velimula@example.com')
+new_password_ali = generate_random_password()
+print("new passAli:", new_password_ali)
+update_user_password('alikula@example.com', new_password_ali)
+
+
+new_password_veli = generate_random_password()
+print("new passVeli:", new_password_veli)
+update_user_password('velimula@example.com', new_password_veli)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
