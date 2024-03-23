@@ -407,7 +407,7 @@ def login():
             cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s", (email,))
             technician = cur.fetchone()
             
-            if technician and check_password_hash(technician['Pass'], password):
+            if technician and check_password_hash(technician[5], password):
                 print(technician)
                 # session['loggedin'] = True
                 # session['email'] = technician[4]
