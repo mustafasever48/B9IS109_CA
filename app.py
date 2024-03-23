@@ -437,14 +437,14 @@ def update_user_password(email, new_password):
 
     return new_password
 
-new_password_ali = generate_random_password()
-print("new passAli:", new_password_ali)
-update_user_password('alikula@example.com', new_password_ali)
+#new_password_ali = generate_random_password()
+#print("new passAli:", new_password_ali)
+#update_user_password('alikula@example.com', new_password_ali)
 
 
-new_password_veli = generate_random_password()
-print("new passVeli:", new_password_veli)
-update_user_password('velimula@example.com', new_password_veli)
+#new_password_veli = generate_random_password()
+#print("new passVeli:", new_password_veli)
+#update_user_password('velimula@example.com', new_password_veli)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
