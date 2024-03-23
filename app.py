@@ -438,7 +438,7 @@ def update_user_password(email):
         raise e
     finally:
         cur.close()
-
+update_user_password('alikula@example.com')
     return new_password
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
