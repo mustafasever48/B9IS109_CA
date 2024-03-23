@@ -8,6 +8,11 @@ import logging
 from logging.config import dictConfig
 import os
 import traceback  
+
+from werkzeug.security import generate_password_hash, check_password_hash
+import secrets
+import string
+
 #mariadb connection info from config.json file
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -377,6 +382,19 @@ def delete_rma():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+
+
+def generate_random_password(length=12):
+    alphabet = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(secrets.choice(alphabet) for i in range(length))
+    return password
+
+
+def hash_password(password):
+    hashed_password = generate_password_hash(password)
+    return hashed_password
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -386,12 +404,10 @@ def login():
         print("Password:", password)  
         cur = mysql.cursor()
         try:
-         
-            cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s AND Pass = %s", (email, password))
-            
+            cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s", (email,))
             technician = cur.fetchone()
             
-            if technician:
+            if technician and check_password_hash(technician['Pass'], password):
                 print(technician)
                 # session['loggedin'] = True
                 # session['email'] = technician[4]
@@ -406,7 +422,23 @@ def login():
         finally:
             cur.close()
     return jsonify({'error': 'Method not allowed'}), 405
+def update_user_password(email):
+    
+    new_password = generate_random_password()
+    hashed_password = hash_password(new_password)
 
+    
+    cur = mysql.cursor()
+    try:
+        cur.execute("UPDATE Technician SET Pass = %s WHERE Tech_Email = %s", (hashed_password, email))
+        mysql.commit()
+    except Exception as e:
+        
+        mysql.rollback()
+        raise e
+    finally:
+        cur.close()
 
+    return new_password
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
