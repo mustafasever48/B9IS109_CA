@@ -484,7 +484,7 @@ def register():
 
     return 'register'
 def is_logged_in():
-    logged_in = session.get('loggedin')
+    logged_in = session.get('loggedin', False)
     print("Logged in users:", logged_in)
     return logged_in
 
