@@ -411,6 +411,7 @@ def login():
             if technician and check_password_hash(technician[5], password):
                 print(technician)
                 session['loggedin'] = True
+                print(session)
                 session['email'] = email
                 return send_from_directory('/var/www/html/login/static', 'redirect.html')
 
