@@ -466,7 +466,7 @@ def register():
            
             cur = mysql.cursor()
             try:
-                cursor.execute("INSERT INTO Technician (Tech_Name, Tech_Email, Pass) VALUES (%s, %s, %s)", (username, email, hashed_password))
+                cur.execute("INSERT INTO Technician (Tech_Name, Tech_Email, Pass) VALUES (%s, %s, %s)", (username, email, hashed_password))
 
                 mysql.commit()
                 flash('Successfully registered.', 'success')
@@ -474,7 +474,7 @@ def register():
             except mysql.Error as err:
                 flash(f"An error occurred during registration: {err}", 'error')
             finally:
-                cursor.close()
+                cur.close()
 
     return 'register'
 
