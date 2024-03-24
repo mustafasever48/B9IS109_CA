@@ -469,7 +469,7 @@ def register():
                 cursor.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)", (username, email, hashed_password))
                 mysql.commit()
                 flash('Successfully registered.', 'success')
-                return redirect(url_for('login'))
+                return send_from_directory('/var/www/html/register', 'register.html')
             except mysql.Error as err:
                 flash(f"An error occurred during registration: {err}", 'error')
             finally:
