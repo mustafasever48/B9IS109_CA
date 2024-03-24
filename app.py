@@ -454,12 +454,16 @@ def register():
         email = request.form['email']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
-        
-        
+        cur = mysql.cursor()
+        cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s", (email,))
+        existing_user = cur.fetchone()
+        cur.close()
+        if existing_user:
+            return jsonify({'error': 'This email address is already registered.'})
         if not username or not email or not password or not confirm_password:
-            flash('Please fill out all fields.', 'error')
+            return jsonify({'error': 'Please fill out all fields.'})
         elif password != confirm_password:
-            flash('Passwords do not match.', 'error')
+            return jsonify({'error': 'Passwords do not match.'})
         else:
             
             hashed_password = generate_password_hash(password)
@@ -477,7 +481,6 @@ def register():
                 cur.close()
 
     return 'register'
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
