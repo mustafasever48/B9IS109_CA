@@ -200,7 +200,7 @@ def technical_page():
     else:
         cur = mysql.cursor(dictionary=True)
 
-    rma_status_query = '''
+        rma_status_query = '''
         SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
                RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name,
                Technician.Technician_ID
@@ -209,12 +209,12 @@ def technical_page():
         LEFT JOIN Technician ON RMA.Technician_ID = Technician.Technician_ID
     '''
     
-    cur.execute(rma_status_query)
-    rma_status = cur.fetchall()
+        cur.execute(rma_status_query)
+        rma_status = cur.fetchall()
 
-    cur.close()
+        cur.close()
 
-    return jsonify(rma_status)
+        return jsonify(rma_status)
 
 @app.route('/technicians', methods=['GET'])
 def get_technicians():
