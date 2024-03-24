@@ -196,6 +196,8 @@ def check_rma_status():
 
 @app.route('/technical', methods=['GET'])
 def technical_page():
+    if not session.get('logged_in'):
+        return send_from_directory('/var/www/html/login', 'index.html')
     cur = mysql.cursor(dictionary=True)
 
     rma_status_query = '''
@@ -409,8 +411,8 @@ def login():
             
             if technician and check_password_hash(technician[5], password):
                 print(technician)
-                # session['loggedin'] = True
-                # session['email'] = technician[4]
+                session['loggedin'] = True
+                session['email'] = email
                 return send_from_directory('/var/www/html/login/static', 'redirect.html')
 
             else:
@@ -481,6 +483,11 @@ def register():
                 cur.close()
 
     return 'register'
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return send_from_directory('/var/www/html/login', 'index.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
