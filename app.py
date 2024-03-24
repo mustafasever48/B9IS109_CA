@@ -470,7 +470,7 @@ def register():
 
                 mysql.commit()
                 flash('Successfully registered.', 'success')
-                return 'sucess'
+                return send_from_directory('/var/www/html/login', 'index.html')
             except mysql.Error as err:
                 flash(f"An error occurred during registration: {err}", 'error')
             finally:
