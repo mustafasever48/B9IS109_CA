@@ -446,5 +446,37 @@ def update_user_password(email, new_password):
 #print("new passVeli:", new_password_veli)
 #update_user_password('velimula@example.com', new_password_veli)
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+       
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+        
+        
+        if not username or not email or not password or not confirm_password:
+            flash('Please fill out all fields.', 'error')
+        elif password != confirm_password:
+            flash('Passwords do not match.', 'error')
+        else:
+            
+            hashed_password = generate_password_hash(password)
+           
+            cursor = mysql.cursor()
+            try:
+                cursor.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)", (username, email, hashed_password))
+                mysql.commit()
+                flash('Successfully registered.', 'success')
+                return redirect(url_for('login'))
+            except mysql.Error as err:
+                flash(f"An error occurred during registration: {err}", 'error')
+            finally:
+                cursor.close()
+
+    return 'register'
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
