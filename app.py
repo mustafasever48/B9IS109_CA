@@ -466,7 +466,8 @@ def register():
            
             cursor = mysql.cursor()
             try:
-                cursor.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)", (username, email, hashed_password))
+                cursor.execute("INSERT INTO Technician (Tech_Name, Tech_Email, Pass) VALUES (%s, %s, %s)", (username, email, hashed_password))
+
                 mysql.commit()
                 flash('Successfully registered.', 'success')
                 return send_from_directory('/var/www/html/register', 'register.html')
