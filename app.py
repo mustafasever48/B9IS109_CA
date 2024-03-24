@@ -195,6 +195,7 @@ def check_rma_status():
 @app.route('/technical', methods=['GET'])
 def technical_page():
     if 'loggedin' not in session:
+        print('loggedin' not in session)
         return send_from_directory('/var/www/html/login', 'index.html')
     else:
         cur = mysql.cursor(dictionary=True)
