@@ -192,12 +192,6 @@ def check_rma_status():
     return jsonify(rma_status)
 
 
-def technical_page():
-    if not is_logged_in():
-        return redirect(url_for('login'))  # Kullanıcı giriş yapmamışsa login sayfasına yönlendir
-    else:
-        cur = mysql.cursor(dictionary=True)
-
 @app.route('/technical', methods=['GET'])
 def technical_page():
     if not is_logged_in():
