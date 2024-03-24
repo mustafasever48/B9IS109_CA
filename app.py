@@ -243,19 +243,15 @@ def assign_technician():
 
 @app.route('/technical/rma_details', methods=['GET'])
 def get_rma_details():
-    if 'loggedin' not in session:
-        print('loggedin' not in session)
-        return send_from_directory('/var/www/html/login', 'index.html')
-    else:
-        rmaId = request.args.get('rmaId')
+    rmaId = request.args.get('rmaId')
 
-        if not rmaId:
-            return jsonify({'error': 'RMA_ID is required.'}), 400
+    if not rmaId:
+        return jsonify({'error': 'RMA_ID is required.'}), 400
 
-        cur = mysql.cursor(dictionary=True)
+    cur = mysql.cursor(dictionary=True)
     
 
-        rma_details_query = '''
+    rma_details_query = '''
         SELECT RMA.RMA_ID, RMA.Inspaction_Start_Date, RMA.Inspeciton_Completion_Date, RMA.Product_Defect,
                RMA.Check_Issue, RMA.Result_Issue, RMA.Product_ID, Product.Serial_Number, Product.Product_Name,
                Technician.Technician_ID, Technician.Tech_Name,
@@ -271,15 +267,15 @@ def get_rma_details():
         WHERE RMA.RMA_ID = %s;
     '''
 
-        cur.execute(rma_details_query, (rmaId,))
-        rma_details = cur.fetchone()
+    cur.execute(rma_details_query, (rmaId,))
+    rma_details = cur.fetchone()
 
-        cur.close()
+    cur.close()
 
-        if not rma_details:
-            return jsonify({'error': 'RMA details not found.'}), 404
+    if not rma_details:
+        return jsonify({'error': 'RMA details not found.'}), 404
 
-        return jsonify(rma_details)
+    return jsonify(rma_details)
 
 
 
