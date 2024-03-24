@@ -484,7 +484,10 @@ def register():
 
     return 'register'
 def is_logged_in():
-    return session.get('loggedin')
+    logged_in = session.get('loggedin')
+    print("Logged in users:", logged_in)
+    return logged_in
+
 @app.route('/logout')
 def logout():
     session.clear()
