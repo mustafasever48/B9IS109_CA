@@ -60,7 +60,7 @@ dictConfig({
         'handlers': ['wsgi']
     }
 })
-
+app.secret_key = 'your_secret_key'
 @app.teardown_request
 def teardown_request(exception):
     if hasattr(app, 'mysql') and app.mysql:
@@ -464,7 +464,7 @@ def register():
             
             hashed_password = generate_password_hash(password)
            
-            cursor = mysql.cursor()
+            cur = mysql.cursor()
             try:
                 cursor.execute("INSERT INTO Technician (Tech_Name, Tech_Email, Pass) VALUES (%s, %s, %s)", (username, email, hashed_password))
 
