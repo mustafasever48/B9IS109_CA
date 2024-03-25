@@ -23,7 +23,7 @@ CREATE TABLE `Technician` (
   `Tech_Qual` Varchar(50),
   `Tech_Tiitle` Varchar(50),
   `Tech_Email` Varchar(50),
-  `Tech_Pass` Varchar(20),
+  `Tech_Pass` Varchar(255),
   PRIMARY KEY (`Technician_ID`)
 );
 
