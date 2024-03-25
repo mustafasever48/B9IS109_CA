@@ -201,7 +201,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 @app.route('/technical', methods=['GET'])
-@login_required
+#@login_required
 def technical_page():
     cur = mysql.cursor(dictionary=True)
 
@@ -401,7 +401,9 @@ def generate_random_password(length=12):
 def hash_password(password):
     hashed_password = generate_password_hash(password)
     return hashed_password
-
+#new_password_ali = generate_random_password()
+#print("new passAli:", new_password_ali)
+#update_user_password('alikula@example.com', new_password_ali)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
