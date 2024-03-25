@@ -219,7 +219,7 @@ def technical_page():
 
     cur.close()
 
-    return send_from_directory('/var/www/html/technical', 'index.html')
+    return jsonify(rma_status)
 
 @app.route('/technicians', methods=['GET'])
 def get_technicians():
