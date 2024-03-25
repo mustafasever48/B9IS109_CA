@@ -8,7 +8,7 @@ import logging
 from logging.config import dictConfig
 import os
 import traceback  
-from functools import wraps
+
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 import string
@@ -191,21 +191,8 @@ def check_rma_status():
 
     return jsonify(rma_status)
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not is_logged_in():
-            send_from_directory('/var/www/html/login/static', 'redirect.html')
-        return f(*args, **kwargs)
 
-    return decorated_function
-
-
-def is_logged_in():
-    logged_in = session.get('loggedin', False)
-    return logged_in
 @app.route('/technical', methods=['GET'])
-@login_required
 def technical_page():
     cur = mysql.cursor(dictionary=True)
 
@@ -426,7 +413,7 @@ def login():
                 return send_from_directory('/var/www/html/login/static', 'redirect.html')
 
             else:
-               
+              
                 return send_from_directory('/var/www/html/login', 'invalid.html')
         except Exception as e:
             abort(500, str(e))
@@ -501,7 +488,6 @@ def is_logged_in():
 def logout():
     session.clear()
     return send_from_directory('/var/www/html/login', 'index.html')
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
