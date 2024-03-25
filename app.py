@@ -191,7 +191,10 @@ def check_rma_status():
 
     return jsonify(rma_status)
 
-
+def is_logged_in():
+    logged_in = session.get('loggedin', False)
+    print("Logged in users:", logged_in)
+    return logged_in
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
