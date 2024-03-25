@@ -192,6 +192,13 @@ def check_rma_status():
     return jsonify(rma_status)
 
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not is_logged_in():
+            send_from_directory('/var/www/html/login/static', 'redirect.html')
+        return f(*args, **kwargs)
+    return decorated_function
 @app.route('/technical', methods=['GET'])
 @login_required
 def technical_page():
@@ -490,13 +497,6 @@ def logout():
     session.clear()
     return send_from_directory('/var/www/html/login', 'index.html')
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not is_logged_in():
-            send_from_directory('/var/www/html/login/static', 'redirect.html')
-        return f(*args, **kwargs)
-    return decorated_function
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
