@@ -498,6 +498,7 @@ def is_logged_in():
 @app.route('/logout')
 def logout():
     session.clear()
+    app.logger.info('Logout successful')
     return jsonify({'message': 'Logout successful'})
 
 
