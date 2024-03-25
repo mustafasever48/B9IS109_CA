@@ -8,7 +8,7 @@ import logging
 from logging.config import dictConfig
 import os
 import traceback  
-
+from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 import string
@@ -191,8 +191,15 @@ def check_rma_status():
 
     return jsonify(rma_status)
 
-
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('loggedin'):
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 @app.route('/technical', methods=['GET'])
+@login_required
 def technical_page():
     cur = mysql.cursor(dictionary=True)
 
