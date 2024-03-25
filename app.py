@@ -191,17 +191,19 @@ def check_rma_status():
 
     return jsonify(rma_status)
 
-def is_logged_in():
-    logged_in = session.get('loggedin', False)
-    print("Logged in users:", logged_in)
-    return logged_in
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not is_logged_in():
             send_from_directory('/var/www/html/login/static', 'redirect.html')
         return f(*args, **kwargs)
+
     return decorated_function
+
+
+def is_logged_in():
+    logged_in = session.get('loggedin', False)
+    return logged_in
 @app.route('/technical', methods=['GET'])
 @login_required
 def technical_page():
