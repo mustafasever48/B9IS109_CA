@@ -193,6 +193,7 @@ def check_rma_status():
 
 
 @app.route('/technical', methods=['GET'])
+@login_required
 def technical_page():
     cur = mysql.cursor(dictionary=True)
 
@@ -413,8 +414,7 @@ def login():
                 return send_from_directory('/var/www/html/login/static', 'redirect.html')
 
             else:
-                #error_message = 'Invalid email or password. Please try again.'
-                #abort(400, error_message)
+               
                 return send_from_directory('/var/www/html/login', 'invalid.html')
         except Exception as e:
             abort(500, str(e))
@@ -489,6 +489,14 @@ def is_logged_in():
 def logout():
     session.clear()
     return send_from_directory('/var/www/html/login', 'index.html')
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not is_logged_in():
+            send_from_directory('/var/www/html/login/static', 'redirect.html')
+        return f(*args, **kwargs)
+    return decorated_function
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080', debug=True, ssl_context=('/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/cert.pem', '/etc/letsencrypt/live/msubuntu.northeurope.cloudapp.azure.com/privkey.pem'))
