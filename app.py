@@ -410,7 +410,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
         print("Email:", email) 
-        print("Password:", password)  
+        #print("Password:", password)  
         cur = mysql.cursor()
         try:
             cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s", (email,))
