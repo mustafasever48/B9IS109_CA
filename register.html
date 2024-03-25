@@ -1,85 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <style>
-         body {
+        body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
 
-.container {
-    width: 40%;
-    margin: auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    
-}
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
 
-h2 {
-    text-align: center;
-    color: #17a2b8;
-}
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-.form-group {
-    margin-bottom: 20px;
-    
-}
+        label {
+            display: block;
+            font-weight: bold;
+        }
 
-label {
-    display: block;
-    font-weight: bold;
-    color: #333;
-    
-}
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.error {
-    color: red;
-}
-
-button[type="submit"] {
-    width: 100%;
-    background-color: #17a2b8;
-    color: #fff;
-    borde: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #117a8b;
-}
-    
+        .error {
+            color: red;
+        }
     </style>
 </head>
-<body
-style="background-image: url('https://raw.githubusercontent.com/mustafasever48/B9IS109_CA/main/17927.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
- <div class="container">
+
+<body>
     <h2>Register</h2>
-    <form action="https://msubuntu.northeurope.cloudapp.azure.com:8080/register" method="post">
+    <form action="/register" method="post">
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
@@ -98,6 +60,6 @@ style="background-image: url('https://raw.githubusercontent.com/mustafasever48/B
         </div>
         <button type="submit">Register</button>
     </form>
-</div>
 </body>
+
 </html>

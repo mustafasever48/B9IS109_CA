@@ -47,7 +47,7 @@ function createRmaDetailsHtml(data) {
                             <th>Technician Name</th>
                             <td>${data['Tech_Name']}</td>
                         </tr>
-                       
+                        <!-- Ekstra bilgiler için -->
                         <tr>
                             <th>Brand Information</th>
                             <td>${data['Brand_Name']}<br>${data['Brand_Website']}<br>${data['Brand_Category']}<br>${data['Brand_Details']}</td>

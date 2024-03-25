@@ -1,6 +1,6 @@
 function refreshPageData() {
     const rmaTableBody = document.getElementById("rmaTableBody");
-    rmaTableBody.innerHTML = "";
+    rmaTableBody.innerHTML = ""; // Mevcut tabloyu temizle
 
     fetch(`https://msubuntu.northeurope.cloudapp.azure.com:8080/technical`)
         .then(response => response.json())

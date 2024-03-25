@@ -67,7 +67,7 @@ function checkRmaStatus() {
                         const newCell = document.createElement("td");
 
                         if (cell.includes("Date")) {
-                            const dateValue = rma[cell] ? new Date(rma[cell]).toISOString().split('T')[0] : ""; 
+                            const dateValue = rma[cell] ? new Date(rma[cell]).toISOString().split('T')[0] : "";
                             newCell.textContent = dateValue;
                         } else {
                             newCell.textContent = rma[cell];
