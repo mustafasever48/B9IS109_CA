@@ -60,7 +60,9 @@ dictConfig({
         'handlers': ['wsgi']
     }
 })
+
 app.secret_key = 'your_secret_key'
+
 @app.teardown_request
 def teardown_request(exception):
     if hasattr(app, 'mysql') and app.mysql:
@@ -195,7 +197,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not session.get('loggedin'):
-            return redirect(url_for('login'))
+            return send_from_directory('/var/www/html/login', 'index.html')
         return f(*args, **kwargs)
     return decorated_function
 @app.route('/technical', methods=['GET'])
