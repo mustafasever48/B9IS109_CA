@@ -60,9 +60,9 @@ dictConfig({
         'handlers': ['wsgi']
     }
 })
-
+#Defines the secret key for each session
 app.secret_key = 'your_secret_key'
-
+#After each connection, closing the database connection
 @app.teardown_request
 def teardown_request(exception):
     if hasattr(app, 'mysql') and app.mysql:
