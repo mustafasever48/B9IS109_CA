@@ -495,13 +495,10 @@ def is_logged_in():
 
 
 
-
-
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect('https://msubuntu.northeurope.cloudapp.azure.com:8080/logout')
-
+    return jsonify({'message': 'Logout successful'})
 
 
 if __name__ == "__main__":
