@@ -497,7 +497,7 @@ def is_logged_in():
 
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
     print('Logout successful')
