@@ -500,7 +500,7 @@ def is_logged_in():
 def logout():
     session.clear()
     print('Logout successful')
-    return jsonify({'message': 'Logout successful'})
+    return send_from_directory('/var/www/html', 'index..html')
 
 
 if __name__ == "__main__":
