@@ -496,12 +496,11 @@ def is_logged_in():
     return logged_in
 
 
-
-@app.route('/logout', methods=['GET'])
+@app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
     print('Logout successful')
-    return send_from_directory('/var/www/html/login', '.html')
+    return jsonify({'message': 'Logout successful'})
 
 
 if __name__ == "__main__":
