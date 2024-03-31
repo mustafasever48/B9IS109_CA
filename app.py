@@ -490,6 +490,21 @@ def register():
                 cur.close()
 
     return 'register'
+from email.message import EmailMessage
+import smtplib
+app.config['MAIL_SERVER'] = 'smtp.example.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'rmatest48@outlook.com'
+app.config['MAIL_PASSWORD'] = 'Vitel123!'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+def send_registration_email(email):
+    msg = Message('Registration Successful',
+                  sender='rmatest48@outlook.com',
+                  recipients=[email])
+    msg.body = 'Thank you for registering.'
+    mail.send(msg)
+
 def is_logged_in():
     logged_in = session.get('loggedin', False)
     print("Logged in users:", logged_in)
