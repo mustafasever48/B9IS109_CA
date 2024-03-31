@@ -509,7 +509,7 @@ def send_registration_email(username, recipient_email):
     smtp_username = sender_email
     smtp_password = "Vitel123!"
 
-    message = f"Hello {username},\n\nThank you for registering."
+    message = f"Hello {username},\n\nCongratulations in your new job!"
 
     email = EmailMessage()
     email["From"] = sender_email
