@@ -502,14 +502,19 @@ import smtplib
 
 
 
+def get_smtp_password():
+    with open("password.json", "r") as file:
+        data = json.load(file)
+        return data["smtp_password"]
+
 def send_registration_email(username, recipient_email):
     sender_email = "rmatest48@outlook.com"
     smtp_server = "smtp-mail.outlook.com"
     smtp_port = 587
     smtp_username = sender_email
-    smtp_password = "Vitel123!"
+    smtp_password = get_smtp_password()
 
-    message = f"Hello {username},\n\nCongratulations in your new job!"
+    message = f"Hello {username},\n\nCongratulations on your new job!"
 
     email = EmailMessage()
     email["From"] = sender_email
@@ -526,7 +531,7 @@ def send_registration_email(username, recipient_email):
         return True  
     except Exception as e:
         print(f"Failed to send email: {e}")
-        return False  
+        return False 
 
 def is_logged_in():
     logged_in = session.get('loggedin', False)
