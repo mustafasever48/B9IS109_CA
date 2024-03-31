@@ -492,18 +492,34 @@ def register():
     return 'register'
 from email.message import EmailMessage
 import smtplib
-app.config['MAIL_SERVER'] = 'smtp.example.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'rmatest48@outlook.com'
-app.config['MAIL_PASSWORD'] = 'Vitel123!'
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-def send_registration_email(email):
-    msg = Message('Registration Successful',
-                  sender='rmatest48@outlook.com',
-                  recipients=[email])
-    msg.body = 'Thank you for registering.'
-    mail.send(msg)
+
+
+
+def send_registration_email(username, recipient_email):
+    sender_email = "rmatest48@outlook.com"
+    smtp_server = "smtp-mail.outlook.com"
+    smtp_port = 587
+    smtp_username = sender_email
+    smtp_password = "Vitel123!"
+
+    message = f"Hello {username},\n\nThank you for registering."
+
+    email = EmailMessage()
+    email["From"] = sender_email
+    email["To"] = recipient_email
+    email["Subject"] = "Registration Successful"
+    email.set_content(message)
+
+    try:
+        smtp = smtplib.SMTP(smtp_server, port=smtp_port)
+        smtp.starttls()
+        smtp.login(smtp_username, smtp_password)
+        smtp.send_message(email)
+        smtp.quit()
+        return True  
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+        return False  
 
 def is_logged_in():
     logged_in = session.get('loggedin', False)
