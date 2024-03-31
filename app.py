@@ -458,15 +458,16 @@ def update_user_password(email, new_password):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-       
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
+        
         cur = mysql.cursor()
         cur.execute("SELECT * FROM Technician WHERE Tech_Email = %s", (email,))
         existing_user = cur.fetchone()
         cur.close()
+        
         if existing_user:
             return jsonify({'error': 'This email address is already registered.'})
         if not username or not email or not password or not confirm_password:
@@ -474,15 +475,20 @@ def register():
         elif password != confirm_password:
             return jsonify({'error': 'Passwords do not match.'})
         else:
-            
             hashed_password = generate_password_hash(password)
            
             cur = mysql.cursor()
             try:
                 cur.execute("INSERT INTO Technician (Tech_Name, Tech_Email, Pass) VALUES (%s, %s, %s)", (username, email, hashed_password))
-
                 mysql.commit()
                 flash('Successfully registered.', 'success')
+                
+               
+                if send_registration_email(username, email):
+                    print("Registration email sent successfully.")
+                else:
+                    print("Failed to send registration email.")
+                
                 return send_from_directory('/var/www/html/login', 'index.html')
             except mysql.Error as err:
                 flash(f"An error occurred during registration: {err}", 'error')
@@ -490,6 +496,7 @@ def register():
                 cur.close()
 
     return 'register'
+
 from email.message import EmailMessage
 import smtplib
 
